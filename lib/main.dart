@@ -50,7 +50,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final card = Card(
-    elevation: 2.0,
+    elevation: 1.0,
     clipBehavior: Clip.antiAlias,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,13 +101,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController  _scrollbarController = ScrollController();
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: FlatButton(
-                onPressed: () => print("Internship pressed"),
+                onPressed: () { },
                 child: Text("Internships",
                     style: TextStyle(color: Colors.black, fontSize: 15))),
           ),
@@ -115,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
             child: FlatButton(
                 focusColor: Colors.blue,
-                onPressed: () => print("Freshers job"),
+                onPressed: () { },
                 child: Text("Freshers Job",
                     style: TextStyle(color: Colors.black, fontSize: 15))),
           )
@@ -127,12 +128,17 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.white,
       ),
       body: Center(child: Padding(
-        padding: const EdgeInsets.fromLTRB(100, 25, 100, 50),
-        child: ListView.builder(
-            // itemCount: cards.length,
-            itemBuilder: (context, index) {
-          return card;
-        }),
+        padding: const EdgeInsets.fromLTRB(100, 5, 100, 10),
+        child: Scrollbar(
+          isAlwaysShown: true,
+          controller: _scrollbarController,
+          child: ListView.builder(
+            controller: _scrollbarController,
+              itemCount: 15,
+              itemBuilder: (context, index) {
+            return card;
+          }),
+        ),
       )), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
