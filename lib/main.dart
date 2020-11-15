@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -50,48 +51,58 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final card = Card(
-    elevation: 1.0,
+    elevation: 4.0,
+    shadowColor: Colors.black12,
     clipBehavior: Clip.antiAlias,
     child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      // mainAxisSize: MainAxisSize.min,
+      // crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(15.0, 8.0, 25, 2.0),
-          child: Text(
-            "Byju",
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w700, fontSize: 24),
+          padding: const EdgeInsets.fromLTRB(4.0, 4.0, 8.0, 0.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Chip(shape: RoundedRectangleBorder(), label: Text("Internship", style: TextStyle(color: Colors.blue[700], fontWeight: FontWeight.w400), ), backgroundColor: Colors.blue[50],),
+            ],
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15.0, 2.0, 8.0, 5.0),
-          child: Text(
-            'Business Development Associates',
-            style: TextStyle(color: Colors.black),
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+              child: Image(image: AssetImage("assets/images/google.jpg"), width: 80, height: 80,),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0,10.0, 0, 5.0),
+              child: Text(
+                'Web Designing',
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 17),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(40.0, 5.0, 40.0, 5.0),
+              child: Center(
+                child: Text(
+                  'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+                  style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 17),
+                ),
+              ),
+            ),
+          ],
         ),
+
+        // Spacer(),
         Padding(
-          padding: const EdgeInsets.fromLTRB(15.0, 5.0, 8.0, 10.0),
-          child: Text(
-            'Greyhound divisively hello coldly wonderfully marginally far upon excluding Greyhound divisively hello coldly wonderfully marginally far upon excluding Greyhound divisively hello coldly wonderfully marginally far upon excluding Greyhound divisively hello coldly wonderfully marginally far upon excluding',
-            style: TextStyle(color: Colors.black.withOpacity(0.6)),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 25.0),
+          padding: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text("Posted on: 04/12/2020"),
-              RaisedButton(
-                textColor: Colors.white,
-                color: Colors.black,
-                onPressed: () {
-                  // Perform some action
-                },
-                child: const Text('View & Apply'),
-                elevation: 0.0,
-              )
+              Text("\$6K - \$9K", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.w500),),
+              Text("25/04/20", style: TextStyle(color: Colors.green, fontWeight: FontWeight.w500),),
             ],
           ),
         )
@@ -101,15 +112,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController  _scrollbarController = ScrollController();
+    final ScrollController _scrollbarController = ScrollController();
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: FlatButton(
-              hoverColor: Colors.green,
-                onPressed: () { },
+                hoverColor: Colors.green,
+                onPressed: () {},
                 child: Text("INTERNSHIPS",
                     style: TextStyle(color: Colors.white, fontSize: 15))),
           ),
@@ -117,34 +128,46 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
             child: FlatButton(
                 hoverColor: Colors.green,
-                onPressed: () { },
+                onPressed: () {},
                 child: Text("JOBS",
                     style: TextStyle(color: Colors.white, fontSize: 15))),
           )
         ],
         title: RichText(
-          text: TextSpan(
-            children: <TextSpan>[
-              TextSpan(text: "${widget.title.substring(0,4)}", style: TextStyle(color: Colors.green, fontSize: 27)),
-              TextSpan(text: "${widget.title.substring(4,7)}", style: TextStyle(color: Colors.white, fontSize: 27))
-            ]
-          ),
+          text: TextSpan(children: <TextSpan>[
+            TextSpan(
+                text: "${widget.title.substring(0, 4)}",
+                style: TextStyle(color: Colors.green, fontSize: 27)),
+            TextSpan(
+                text: "${widget.title.substring(4, 7)}",
+                style: TextStyle(color: Colors.white, fontSize: 27))
+          ]),
         ),
         backgroundColor: HexColor("#252D40"),
       ),
-      body: Center(child: Padding(
-        padding: const EdgeInsets.fromLTRB(100, 5, 100, 10),
-        child: Scrollbar(
-          isAlwaysShown: true,
-          controller: _scrollbarController,
-          child: ListView.builder(
-            controller: _scrollbarController,
-              itemCount: 15,
-              itemBuilder: (context, index) {
-            return card;
-          }),
-        ),
-      )), // This trailing comma makes auto-formatting nicer for build methods.
+      body: GridView.extent(
+        padding: EdgeInsets.all(50),
+        maxCrossAxisExtent: 450.0,
+        crossAxisSpacing: 16.0,
+        mainAxisSpacing: 16.0,
+        // Generate 100 widgets that display their index in the List.
+        children: List.generate(100, (index) {
+          return SizedBox(child: card, height: 150.0,);
+        }),
+      ),
+      // Center(child: Padding(
+      //   padding: const EdgeInsets.fromLTRB(100, 5, 100, 10),
+      //   child: Scrollbar(
+      //     isAlwaysShown: true,
+      //     controller: _scrollbarController,
+      //     child: ListView.builder(
+      //       controller: _scrollbarController,
+      //         itemCount: 15,
+      //         itemBuilder: (context, index) {
+      //       return card;
+      //     }),
+      //   ),
+      // )), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
