@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:hexcolor/hexcolor.dart';
 void main() {
   runApp(MyApp());
 }
@@ -108,24 +108,29 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: FlatButton(
+              hoverColor: Colors.green,
                 onPressed: () { },
-                child: Text("Internships",
-                    style: TextStyle(color: Colors.black, fontSize: 15))),
+                child: Text("INTERNSHIPS",
+                    style: TextStyle(color: Colors.white, fontSize: 15))),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
             child: FlatButton(
-                focusColor: Colors.blue,
+                hoverColor: Colors.green,
                 onPressed: () { },
-                child: Text("Freshers Job",
-                    style: TextStyle(color: Colors.black, fontSize: 15))),
+                child: Text("JOBS",
+                    style: TextStyle(color: Colors.white, fontSize: 15))),
           )
         ],
-        title: Text(
-          widget.title,
-          style: TextStyle(color: Colors.black, fontSize: 27),
+        title: RichText(
+          text: TextSpan(
+            children: <TextSpan>[
+              TextSpan(text: "${widget.title.substring(0,4)}", style: TextStyle(color: Colors.green, fontSize: 27)),
+              TextSpan(text: "${widget.title.substring(4,7)}", style: TextStyle(color: Colors.white, fontSize: 27))
+            ]
+          ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: HexColor("#252D40"),
       ),
       body: Center(child: Padding(
         padding: const EdgeInsets.fromLTRB(100, 5, 100, 10),
