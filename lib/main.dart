@@ -85,11 +85,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(40.0, 5.0, 40.0, 5.0),
-              child: Center(
-                child: Text(
-                  'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-                  style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 17),
-                ),
+              child: Text(
+                'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+                style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 17),
+                textAlign: TextAlign.center,
               ),
             ),
           ],
@@ -152,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisSpacing: 16.0,
         // Generate 100 widgets that display their index in the List.
         children: List.generate(100, (index) {
-          return SizedBox(child: card, height: 150.0,);
+          return InkWell(child: card, onTap: (){}, hoverColor: Colors.green[50],);
         }),
       ),
       // Center(child: Padding(
