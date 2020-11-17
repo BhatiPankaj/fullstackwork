@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:techjob/job_detail.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -30,12 +33,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'TechJob',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MyHomePage(title: 'TechJob'),
+        '/jobDetail': (context) => JobDetail(title: 'TechJob',)
+      },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: primaryBlack,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'TechJob'),
+      // home: MyHomePage(title: 'TechJob'),
     );
   }
 }
@@ -50,6 +58,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  _launchURL() async {
+    const url = 'https://flutter.dev';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   final card = Card(
     elevation: 4.0,
     shadowColor: Colors.black12,
@@ -151,7 +169,10 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisSpacing: 16.0,
         // Generate 100 widgets that display their index in the List.
         children: List.generate(100, (index) {
-          return InkWell(child: card, onTap: (){}, hoverColor: Colors.green[50],);
+          return InkWell(child: card, onTap: (){
+            // Navigator.pushNamed(context, '/jobDetail');
+            _launchURL();
+          }, hoverColor: Colors.green[50],);
         }),
       ),
       // Center(child: Padding(
