@@ -1,7 +1,5 @@
 {
   "hosting": {
-    "site": "techjob",
-    "public": "public",
     "public": "build/web",
     "ignore": [
       "firebase.json",
