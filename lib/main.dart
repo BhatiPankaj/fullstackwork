@@ -4,7 +4,6 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:techjob/job_detail.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 void main() {
   runApp(MyApp());
 }
@@ -36,7 +35,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => MyHomePage(title: 'TechJob'),
-        '/jobDetail': (context) => JobDetail(title: 'TechJob',)
+        '/jobDetail': (context) => JobDetail(
+              title: 'TechJob',
+            )
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -58,7 +59,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   _instagramURL() async {
     const url = 'https://www.instagram.com/pankaj.bhati412/';
     if (await canLaunch(url)) {
@@ -67,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
       throw 'Could not launch $url';
     }
   }
+
   _linkedinURL() async {
     const url = 'https://www.linkedin.com/in/pankaj-bhati-90021a166/';
     if (await canLaunch(url)) {
@@ -90,7 +91,15 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              Chip(shape: RoundedRectangleBorder(), label: Text("Internship", style: TextStyle(color: Colors.blue[700], fontWeight: FontWeight.w400), ), backgroundColor: Colors.blue[50],),
+              Chip(
+                shape: RoundedRectangleBorder(),
+                label: Text(
+                  "Internship",
+                  style: TextStyle(
+                      color: Colors.blue[700], fontWeight: FontWeight.w400),
+                ),
+                backgroundColor: Colors.blue[50],
+              ),
             ],
           ),
         ),
@@ -100,20 +109,28 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Image(image: AssetImage("assets/images/google.jpg"), width: 80, height: 80,),
+              child: Image(
+                image: AssetImage("assets/images/google.jpg"),
+                width: 80,
+                height: 80,
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0,10.0, 0, 5.0),
+              padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 5.0),
               child: Text(
                 'Web Designing',
-                style: TextStyle(color: Colors.black, fontWeight: FontWeight.w500, fontSize: 17),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 17),
               ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(40.0, 5.0, 40.0, 5.0),
               child: Text(
                 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-                style: TextStyle(color: Colors.black.withOpacity(0.6), fontSize: 17),
+                style: TextStyle(
+                    color: Colors.black.withOpacity(0.6), fontSize: 17),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -126,8 +143,16 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text("\$6K - \$9K", style: TextStyle(color: Colors.orange, fontWeight: FontWeight.w500),),
-              Text("25/04/20", style: TextStyle(color: Colors.green, fontWeight: FontWeight.w500),),
+              Text(
+                "\$6K - \$9K",
+                style: TextStyle(
+                    color: Colors.orange, fontWeight: FontWeight.w500),
+              ),
+              Text(
+                "25/04/20",
+                style:
+                    TextStyle(color: Colors.green, fontWeight: FontWeight.w500),
+              ),
             ],
           ),
         )
@@ -147,7 +172,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: FlatButton(
                 // hoverColor: Colors.green,
                 onPressed: () {},
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(80)),
                 splashColor: Colors.green,
                 child: Text("INTERNSHIPS",
                     style: TextStyle(color: Colors.white, fontSize: 15))),
@@ -158,21 +184,35 @@ class _MyHomePageState extends State<MyHomePage> {
                 // hoverColor: Colors.green,
                 onPressed: () {},
                 splashColor: Colors.green,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40)),
                 child: Text("JOBS",
                     style: TextStyle(color: Colors.white, fontSize: 15))),
           ),
           InkWell(
-            onTap: () {_instagramURL();},
+            onTap: () {
+              _instagramURL();
+            },
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-              child: Image(image: AssetImage("assets/images/instagram.png"), width: 50, height: 50,),
+              child: Image(
+                image: AssetImage("assets/images/instagram.png"),
+                width: 50,
+                height: 50,
+              ),
             ),
-          ),InkWell(
-            onTap: () {_linkedinURL();},
+          ),
+          InkWell(
+            onTap: () {
+              _linkedinURL();
+            },
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 15, 10),
-              child: Image(image: AssetImage("assets/images/linkedin.webp"), width: 33, height: 33,),
+              child: Image(
+                image: AssetImage("assets/images/linkedin.webp"),
+                width: 33,
+                height: 33,
+              ),
             ),
           ),
         ],
@@ -193,27 +233,17 @@ class _MyHomePageState extends State<MyHomePage> {
         maxCrossAxisExtent: 450.0,
         crossAxisSpacing: 16.0,
         mainAxisSpacing: 16.0,
-        // Generate 100 widgets that display their index in the List.
         children: List.generate(20, (index) {
-          return InkWell(child: card, onTap: (){
-            Navigator.pushNamed(context, '/jobDetail');
-            // _launchURL();
-          }, hoverColor: Colors.green[50],);
+          return InkWell(
+            child: card,
+            onTap: () {
+              Navigator.pushNamed(context, '/jobDetail');
+              // _launchURL();
+            },
+            hoverColor: Colors.green[50],
+          );
         }),
       ),
-      // Center(child: Padding(
-      //   padding: const EdgeInsets.fromLTRB(100, 5, 100, 10),
-      //   child: Scrollbar(
-      //     isAlwaysShown: true,
-      //     controller: _scrollbarController,
-      //     child: ListView.builder(
-      //       controller: _scrollbarController,
-      //         itemCount: 15,
-      //         itemBuilder: (context, index) {
-      //       return card;
-      //     }),
-      //   ),
-      // )), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
