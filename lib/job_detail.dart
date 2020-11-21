@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'job_description.dart';
 
 class JobDetail extends StatefulWidget {
   JobDetail({Key key, this.title}) : super(key: key);
@@ -14,59 +15,8 @@ class JobDetail extends StatefulWidget {
 }
 
 class _JobDetailState extends State<JobDetail> {
-  final requirements = [
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-    "Pankaj",
-    "Bhati",
-  ];
+  JobDescription _jobDescription = JobDescription();
 
-  Widget requirement(int index) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 4, 4, 2),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(40))),
-            ),
-          ),
-          Text("${requirements[index]}")
-        ],
-      ),
-    );
-  }
   // @override
   // void initState() {
   //   WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
@@ -76,11 +26,6 @@ class _JobDetailState extends State<JobDetail> {
   //   getSize();
   // }
   //
-  double getSize(){
-
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -252,65 +197,29 @@ class _JobDetailState extends State<JobDetail> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(250.0),
-              child: Card(
-                elevation: 2.0,
-                child: Container(
-                  // height: 38.0 * requirements.length,
-                  alignment: Alignment.topLeft,
-                  padding: const EdgeInsets.all(30.0),
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Job Description",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 20,
-                            )),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                            "As a Flutter Developer, you will create multi-platform apps for iOS and Android using Google's Flutter development framework. The primary focus will be on creating new experiences. You will additionally work on innovative new app projects. \n\nDeep experience contributing to and managing high-scale production mobile apps."),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                        child: Text("Responsibilities/Requirements",
-                            style: TextStyle(fontWeight: FontWeight.w500)),
-                      ),
-                      Container(
-                        height: 25.5 * requirements.length,
-                        child: ListView.builder(
-                          itemCount: requirements.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return requirement(index);
-                          },
-                        ),
-                      ),
-                      Text("Skills"),
-                    ],
-                  ),
-                ),
-              ),
-            )
+            LayoutBuilder(builder: (context, constraints) {
+              if (constraints.maxWidth > 1200) {
+                return _jobDescription.jobDetailWidget(
+                    250.0, 250.0);
+              } else if (constraints.maxWidth > 1000) {
+                return _jobDescription.jobDetailWidget(
+                    150, 260);
+              } else if (constraints.maxWidth > 800) {
+                return _jobDescription.jobDetailWidget(
+                    100, 260);
+              }
+              else if (constraints.maxWidth > 550) {
+                return _jobDescription.jobDetailWidget(
+                    50, 400);
+              }
+              else {
+                return _jobDescription.jobDetailWidget(
+                    30, 510);
+              }
+            }),
           ]),
         ],
       ),
-      // ListView.builder(
-      //   // Let the ListView know how many items it needs to build.
-      //   itemCount: 2,
-      //   // Provide a builder function. This is where the magic happens.
-      //   // Convert each item into a widget based on the type of item it is.
-      //   itemBuilder: (context, index) {
-      //
-      //   },
-      // );
     );
   }
 }
