@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 final requirements = [
@@ -12,6 +14,7 @@ final requirements = [
   "You should have worked on multiple Flutter projects.",
   "You should have very Good Logical and Analytical Skills",
 ];
+final skills  = ["CSS", "HTML", "Flutter", "JAVA", "Dart", "Python"];
 
 class JobDescription {
   Widget requirement(int index) {
@@ -57,21 +60,21 @@ class JobDescription {
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-                child: Text("Responsibilities/Requirements",
+                child: Text("Responsibilities and Requirements",
                     style:
                         TextStyle(fontWeight: FontWeight.w500, fontSize: 18)),
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 8),
-                child: Container(
-                  height: 26.0 * requirements.length,
-                  child: ListView.builder(
-                    itemCount: requirements.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return requirement(index);
-                    },
-                  ),
-                ),
+                padding: const EdgeInsets.fromLTRB(12, 0, 0, 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(requirements.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(6, 3, 0, 3),
+                      child: Text(requirements[index]),
+                    );
+                  }),
+                )
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -84,44 +87,14 @@ class JobDescription {
                 child: Wrap(
                   spacing: 8.0,
                   runSpacing: 8.0,
-                  children: [
-                    Chip(
+                  children: List.generate(skills.length, (index) {
+                    return Chip(
                       elevation: 1.0,
                       shadowColor: Colors.black87,
                       backgroundColor: Colors.white,
-                      label: Text("CSS"),
-                    ),
-                    Chip(
-                      elevation: 1.0,
-                      shadowColor: Colors.black87,
-                      backgroundColor: Colors.white,
-                      label: Text("HTML"),
-                    ),
-                    Chip(
-                      elevation: 1.0,
-                      shadowColor: Colors.black87,
-                      backgroundColor: Colors.white,
-                      label: Text("Flutter"),
-                    ),
-                    Chip(
-                      elevation: 1.0,
-                      shadowColor: Colors.black87,
-                      backgroundColor: Colors.white,
-                      label: Text("React"),
-                    ),
-                    Chip(
-                      elevation: 1.0,
-                      shadowColor: Colors.black87,
-                      backgroundColor: Colors.white,
-                      label: Text("Dart"),
-                    ),
-                    Chip(
-                      elevation: 1.0,
-                      shadowColor: Colors.black87,
-                      backgroundColor: Colors.white,
-                      label: Text("JAVA"),
-                    ),
-                  ],
+                      label: Text(skills[index]),
+                    );
+                  })
                 ),
               ),
               Padding(
