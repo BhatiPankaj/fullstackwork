@@ -1,9 +1,10 @@
 import 'dart:html';
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:techjob/urls.dart';
 import 'job_description.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class JobDetail extends StatefulWidget {
   JobDetail({Key key, this.title}) : super(key: key);
@@ -16,6 +17,7 @@ class JobDetail extends StatefulWidget {
 
 class _JobDetailState extends State<JobDetail> {
   JobDescription _jobDescription = JobDescription();
+  URLs _urLs = URLs();
 
   // @override
   // void initState() {
@@ -30,20 +32,23 @@ class _JobDetailState extends State<JobDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80,
+        toolbarHeight: 70,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: RichText(
-          text: TextSpan(children: <TextSpan>[
-            TextSpan(
-                text: "${widget.title.substring(0, 4)}",
-                style: TextStyle(color: Colors.green, fontSize: 27)),
-            TextSpan(
-                text: "${widget.title.substring(4, 7)}",
-                style: TextStyle(color: Colors.black, fontSize: 27))
-          ]),
+        title: InkWell(
+          onTap: (){},
+          child: RichText(
+            text: TextSpan(children: <TextSpan>[
+              TextSpan(
+                  text: "${widget.title.substring(0, 4)}",
+                  style: TextStyle(color: Colors.green, fontSize: 27)),
+              TextSpan(
+                  text: "${widget.title.substring(4, 7)}",
+                  style: TextStyle(color: Colors.white, fontSize: 27))
+            ]),
+          ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: HexColor("#252D40"),
         elevation: 2.0,
       ),
       body: ListView(
@@ -106,7 +111,7 @@ class _JobDetailState extends State<JobDetail> {
                             child: Text(
                               "Surat",
                               style: TextStyle(
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.w500,
                                   fontSize: 16,
                                   color: Colors.green),
                             ),
@@ -199,25 +204,62 @@ class _JobDetailState extends State<JobDetail> {
             ),
             LayoutBuilder(builder: (context, constraints) {
               if (constraints.maxWidth > 1200) {
-                return _jobDescription.jobDetailWidget(
-                    250.0, 250.0);
+                return _jobDescription.jobDetailWidget(250.0, 250.0);
               } else if (constraints.maxWidth > 1000) {
-                return _jobDescription.jobDetailWidget(
-                    150, 260);
+                return _jobDescription.jobDetailWidget(150, 260);
               } else if (constraints.maxWidth > 800) {
-                return _jobDescription.jobDetailWidget(
-                    100, 260);
-              }
-              else if (constraints.maxWidth > 550) {
-                return _jobDescription.jobDetailWidget(
-                    50, 400);
-              }
-              else {
-                return _jobDescription.jobDetailWidget(
-                    30, 510);
+                return _jobDescription.jobDetailWidget(100, 260);
+              } else if (constraints.maxWidth > 550) {
+                return _jobDescription.jobDetailWidget(50, 400);
+              } else {
+                return _jobDescription.jobDetailWidget(30, 510);
               }
             }),
           ]),
+          Container(
+            padding: const EdgeInsets.fromLTRB(20, 2, 20, 2),
+            color: HexColor("#252D40"),
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "© 2020 TechJob",
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        _urLs.instagramURL();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                        child: Image(
+                          image: AssetImage("assets/images/instagram.png"),
+                          width: 50,
+                          height: 50,
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        _urLs.linkedinURL();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 15, 10),
+                        child: Image(
+                          image: AssetImage("assets/images/linkedin.webp"),
+                          width: 33,
+                          height: 33,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );

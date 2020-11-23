@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:techjob/job_detail.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'urls.dart';
 
 void main() {
   runApp(MyApp());
@@ -59,106 +59,96 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  _instagramURL() async {
-    const url = 'https://www.instagram.com/pankaj.bhati412/';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+  URLs _urLs = URLs();
 
-  _linkedinURL() async {
-    const url = 'https://www.linkedin.com/in/pankaj-bhati-90021a166/';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  final card = Card(
-    elevation: 4.0,
-    shadowColor: Colors.black12,
-    clipBehavior: Clip.antiAlias,
-    child: Column(
-      // mainAxisSize: MainAxisSize.min,
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(4.0, 4.0, 8.0, 0.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Chip(
-                shape: RoundedRectangleBorder(),
-                label: Text(
-                  "Internship",
-                  style: TextStyle(
-                      color: Colors.blue[700], fontWeight: FontWeight.w400),
+  final card = Padding(
+      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+      child: Container(
+          width: 350,
+          height: 360,
+          child: Card(
+            elevation: 4.0,
+            shadowColor: Colors.black12,
+            clipBehavior: Clip.antiAlias,
+            child: Column(
+              // mainAxisSize: MainAxisSize.min,
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(4.0, 4.0, 8.0, 0.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Chip(
+                        shape: RoundedRectangleBorder(),
+                        label: Text(
+                          "Internship",
+                          style: TextStyle(
+                              color: Colors.blue[700],
+                              fontWeight: FontWeight.w400),
+                        ),
+                        backgroundColor: Colors.blue[50],
+                      ),
+                    ],
+                  ),
                 ),
-                backgroundColor: Colors.blue[50],
-              ),
-            ],
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Image(
-                image: AssetImage("assets/images/google.jpg"),
-                width: 80,
-                height: 80,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 5.0),
-              child: Text(
-                'Web Designing',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 17),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(40.0, 5.0, 40.0, 5.0),
-              child: Text(
-                'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-                style: TextStyle(
-                    color: Colors.black.withOpacity(0.6), fontSize: 17),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
-        ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Image(
+                        image: AssetImage("assets/images/google.jpg"),
+                        width: 80,
+                        height: 80,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 5.0),
+                      child: Text(
+                        'Web Designing',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 17),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(40.0, 5.0, 40.0, 5.0),
+                      child: Text(
+                        'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+                        style: TextStyle(
+                            color: Colors.black.withOpacity(0.6), fontSize: 17),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
 
-        // Spacer(),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                "\$6K - \$9K",
-                style: TextStyle(
-                    color: Colors.orange, fontWeight: FontWeight.w500),
-              ),
-              Text(
-                "25/04/20",
-                style:
-                    TextStyle(color: Colors.green, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-        )
-      ],
-    ),
-  );
+                // Spacer(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "\$6K - \$9K",
+                        style: TextStyle(
+                            color: Colors.orange, fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        "25/04/20",
+                        style: TextStyle(
+                            color: Colors.green, fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )));
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           InkWell(
             onTap: () {
-              _instagramURL();
+              _urLs.instagramURL();
             },
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
@@ -204,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           InkWell(
             onTap: () {
-              _linkedinURL();
+              _urLs.linkedinURL();
             },
             child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 10, 15, 10),
@@ -216,34 +206,74 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ],
-        title: RichText(
-          text: TextSpan(children: <TextSpan>[
-            TextSpan(
-                text: "${widget.title.substring(0, 4)}",
-                style: TextStyle(color: Colors.green, fontSize: 35)),
-            TextSpan(
-                text: "${widget.title.substring(4, 7)}",
-                style: TextStyle(color: Colors.white, fontSize: 35))
-          ]),
-        ),
+        automaticallyImplyLeading: false,
+        title: InkWell(
+            onTap: () {
+              _urLs.linkedinURL();
+            },
+            child: RichText(
+              text: TextSpan(children: <TextSpan>[
+                TextSpan(
+                    text: "${widget.title.substring(0, 4)}",
+                    style: TextStyle(color: Colors.green, fontSize: 35)),
+                TextSpan(
+                    text: "${widget.title.substring(4, 7)}",
+                    style: TextStyle(color: Colors.white, fontSize: 35))
+              ]),
+            )),
         backgroundColor: HexColor("#252D40"),
       ),
-      body: GridView.extent(
-        padding: EdgeInsets.all(50),
-        maxCrossAxisExtent: 450.0,
-        crossAxisSpacing: 16.0,
-        mainAxisSpacing: 16.0,
-        children: List.generate(20, (index) {
-          return InkWell(
-            child: card,
-            onTap: () {
-              Navigator.pushNamed(context, '/jobDetail');
-              // _launchURL();
-            },
-            hoverColor: Colors.green[50],
-          );
-        }),
+      body: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: Wrap(
+              alignment: WrapAlignment.spaceEvenly,
+              children: List.generate(20, (index) {
+                return InkWell(
+                  child: card,
+                  onTap: () {
+                    Navigator.pushNamed(context, '/jobDetail');
+                    // _launchURL();
+                  },
+                  hoverColor: Colors.green[50],
+                );
+              }),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+            child: Container(
+              height: 50,
+              color: HexColor("#252D40"),
+              child: Center(
+                child: Text(
+                  "© 2020 TechJob",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          )
+        ],
       ),
+      // )
+
+      // GridView.extent(
+      //   padding: EdgeInsets.all(50),
+      //   maxCrossAxisExtent: 450.0,
+      //   crossAxisSpacing: 16.0,
+      //   mainAxisSpacing: 16.0,
+      //   children: List.generate(20, (index) {
+      //     return InkWell(
+      //       child: card,
+      //       onTap: () {
+      //         Navigator.pushNamed(context, '/jobDetail');
+      //         // _launchURL();
+      //       },
+      //       hoverColor: Colors.green[50],
+      //     );
+      //   }),
+      // ),
     );
   }
 }
