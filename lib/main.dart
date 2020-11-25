@@ -152,128 +152,166 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController _scrollbarController = ScrollController();
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 80,
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: FlatButton(
-                // hoverColor: Colors.green,
-                onPressed: () {},
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80)),
-                splashColor: Colors.green,
-                child: Text("INTERNSHIPS",
-                    style: TextStyle(color: Colors.white, fontSize: 15))),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 8.0, 10.0, 8.0),
-            child: FlatButton(
-                // hoverColor: Colors.green,
-                onPressed: () {},
-                splashColor: Colors.green,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40)),
-                child: Text("JOBS",
-                    style: TextStyle(color: Colors.white, fontSize: 15))),
-          ),
-          InkWell(
-            onTap: () {
-              _urLs.instagramURL();
-            },
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-              child: Image(
-                image: AssetImage("assets/images/instagram.png"),
-                width: 50,
-                height: 50,
-              ),
+    // final ScrollController _scrollbarController = ScrollController();
+    return LayoutBuilder(
+      builder: (context, constraints) {return  Scaffold(
+        appBar: constraints.maxWidth > 499.0 ? AppBar(
+          toolbarHeight: 80,
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FlatButton(
+                  // hoverColor: Colors.green,
+                  onPressed: () {},
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(80)),
+                  splashColor: Colors.green,
+                  child: Text("INTERNSHIPS",
+                      style: TextStyle(color: Colors.white, fontSize: 15))),
             ),
-          ),
-          InkWell(
-            onTap: () {
-              _urLs.linkedinURL();
-            },
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 15, 10),
-              child: Image(
-                image: AssetImage("assets/images/linkedin.webp"),
-                width: 33,
-                height: 33,
-              ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8.0, 8.0, 10.0, 8.0),
+              child: FlatButton(
+                  // hoverColor: Colors.green,
+                  onPressed: () {},
+                  splashColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40)),
+                  child: Text("JOBS",
+                      style: TextStyle(color: Colors.white, fontSize: 15))),
             ),
-          ),
-        ],
-        automaticallyImplyLeading: false,
-        title: InkWell(
-            onTap: () {
-              _urLs.linkedinURL();
-            },
-            child: RichText(
-              text: TextSpan(children: <TextSpan>[
-                TextSpan(
-                    text: "${widget.title.substring(0, 4)}",
-                    style: TextStyle(color: Colors.green, fontSize: 35)),
-                TextSpan(
-                    text: "${widget.title.substring(4, 7)}",
-                    style: TextStyle(color: Colors.white, fontSize: 35))
-              ]),
-            )),
-        backgroundColor: HexColor("#252D40"),
-      ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Wrap(
-              alignment: WrapAlignment.spaceEvenly,
-              children: List.generate(20, (index) {
-                return InkWell(
-                  child: card,
-                  onTap: () {
-                    Navigator.pushNamed(context, '/jobDetail');
-                    // _launchURL();
-                  },
-                  hoverColor: Colors.green[50],
-                );
-              }),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-            child: Container(
-              height: 50,
-              color: HexColor("#252D40"),
-              child: Center(
-                child: Text(
-                  "© 2020 TechJob",
-                  style: TextStyle(color: Colors.white),
+            InkWell(
+              onTap: () {
+                _urLs.instagramURL();
+              },
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                child: Image(
+                  image: AssetImage("assets/images/instagram.png"),
+                  width: 50,
+                  height: 50,
                 ),
               ),
             ),
-          )
-        ],
-      ),
-      // )
+            InkWell(
+              onTap: () {
+                _urLs.linkedinURL();
+              },
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 15, 10),
+                child: Image(
+                  image: AssetImage("assets/images/linkedin.webp"),
+                  width: 33,
+                  height: 33,
+                ),
+              ),
+            ),
+          ],
+          automaticallyImplyLeading: false,
+          title: InkWell(
+              onTap: () {
+                _urLs.techJobURL();
+              },
+              child: RichText(
+                text: TextSpan(children: <TextSpan>[
+                  TextSpan(
+                      text: "${widget.title.substring(0, 4)}",
+                      style: TextStyle(color: Colors.green, fontSize: 35)),
+                  TextSpan(
+                      text: "${widget.title.substring(4, 7)}",
+                      style: TextStyle(color: Colors.white, fontSize: 35))
+                ]),
+              )),
+          backgroundColor: HexColor("#252D40"),
+        ) : AppBar(
+          toolbarHeight: 70,
+          // automaticallyImplyLeading: false,
+          centerTitle: true,
+          leading: InkWell(child: Icon(Icons.apps_rounded), onTap: (){
+            // return ExpansionPanelList(children: [
+            //   ExpansionPanel(headerBuilder: , body: InkWell(
+            //     onTap: () {
+            //       _urLs.linkedinURL();
+            //     },
+            //     child: Padding(
+            //       padding: const EdgeInsets.fromLTRB(0, 10, 15, 10),
+            //       child: Image(
+            //         image: AssetImage("assets/images/linkedin.webp"),
+            //         width: 33,
+            //         height: 33,
+            //       ),
+            //     ),
+            //   ),)
+            // ],);
+          },),
+          title: InkWell(
+              onTap: () {
+                _urLs.techJobURL();
+              },
+              child: RichText(
+                text: TextSpan(children: <TextSpan>[
+                  TextSpan(
+                      text: "${widget.title.substring(0, 4)}",
+                      style: TextStyle(color: Colors.green, fontSize: 35)),
+                  TextSpan(
+                      text: "${widget.title.substring(4, 7)}",
+                      style: TextStyle(color: Colors.white, fontSize: 35))
+                ]),
+              )),
+          backgroundColor: HexColor("#252D40"),
+        ),
+        body: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              child: Wrap(
+                alignment: WrapAlignment.spaceEvenly,
+                children: List.generate(20, (index) {
+                  return InkWell(
+                    child: card,
+                    onTap: () {
+                      Navigator.pushNamed(context, '/jobDetail');
+                      // _launchURL();
+                    },
+                    hoverColor: Colors.green[50],
+                  );
+                }),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+              child: Container(
+                height: 50,
+                color: HexColor("#252D40"),
+                child: Center(
+                  child: Text(
+                    "© 2020 TechJob",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+        // )
 
-      // GridView.extent(
-      //   padding: EdgeInsets.all(50),
-      //   maxCrossAxisExtent: 450.0,
-      //   crossAxisSpacing: 16.0,
-      //   mainAxisSpacing: 16.0,
-      //   children: List.generate(20, (index) {
-      //     return InkWell(
-      //       child: card,
-      //       onTap: () {
-      //         Navigator.pushNamed(context, '/jobDetail');
-      //         // _launchURL();
-      //       },
-      //       hoverColor: Colors.green[50],
-      //     );
-      //   }),
-      // ),
+        // GridView.extent(
+        //   padding: EdgeInsets.all(50),
+        //   maxCrossAxisExtent: 450.0,
+        //   crossAxisSpacing: 16.0,
+        //   mainAxisSpacing: 16.0,
+        //   children: List.generate(20, (index) {
+        //     return InkWell(
+        //       child: card,
+        //       onTap: () {
+        //         Navigator.pushNamed(context, '/jobDetail');
+        //         // _launchURL();
+        //       },
+        //       hoverColor: Colors.green[50],
+        //     );
+        //   }),
+        // ),
+      );}
     );
   }
 }

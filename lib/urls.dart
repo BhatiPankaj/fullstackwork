@@ -20,6 +20,15 @@ class URLs{
       throw 'Could not launch $url';
     }
   }
+
+  techJobURL() async {
+    const url = 'https://techjob.web.app/#/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 }
 
 
