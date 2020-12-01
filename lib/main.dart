@@ -1,9 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:techjob/get_cloud_data/job_description.dart';
 import 'package:techjob/job_detail.dart';
 import 'urls.dart';
 import 'homepage_jobDetail.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+
+
 
 void main() {
   runApp(MyApp());
@@ -11,6 +17,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   static const int _blackPrimaryValue = 0xFF000000;
+  CollectionReference users = FirebaseFirestore.instance.collection('sdfsdfg');
 
   // This widget is the root of your application.
   static const MaterialColor primaryBlack = MaterialColor(
@@ -31,14 +38,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CollectionReference jobs = FirebaseFirestore.instance.collection('jobs');
+    String id = "google-01-12-2020";
     return MaterialApp(
       title: 'TechJob',
       initialRoute: '/',
       routes: {
         '/': (context) => MyHomePage(title: 'TechJob'),
         '/jobDetail': (context) => JobDetail(
-              title: 'TechJob',
-            )
+          title: "TechJob",
+        ),
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -60,6 +69,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  GetJobs jobs = GetJobs();
   URLs _urLs = URLs();
   HomePageJobDetail jobDetail = HomePageJobDetail();
   List<Map> jobDetailList = [];
@@ -79,15 +89,64 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  bool _initialized = false;
+  bool _error = false;
+
+  // Define an async function to initialize FlutterFire
+  void initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      await FirebaseFirestore.instance
+          .collection('jobs')
+          .get()
+          .then((QuerySnapshot querySnapshot) => {
+        querySnapshot.docs.forEach((doc) {
+          HomePageJobDetail().detailList.add({
+            'company': doc["company"],
+            'salary': doc["salary"],
+            'label': doc["label"],
+            'skills': doc["skills"],
+            'date': doc["date"],
+            'asset': doc["imgURL"],
+            'title': doc["title"],
+            'width': doc["width"],
+            'height': doc["height"]
+          });
+        })
+      });
+      setState(() {
+        _initialized = true;
+      });
+    } catch(e) {
+      // Set `_error` state to true if Firebase initialization fails
+      print(e);
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+
   @override
   void initState() {
+    initializeFlutterFire();
+    // jobs.addJobsToList();
     addJobsToList("Both");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // final ScrollController _scrollbarController = ScrollController();
+    if(_error) {
+      return Center(child: Text("Something went wrong!"),);
+    }
+
+    // Show a loader until FlutterFire is initialized
+    if (!_initialized) {
+      return Center(child: CircularProgressIndicator());
+    }
+    // CollectionReference jobs = FirebaseFirestore.instance.collection('jobs');
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
         appBar: constraints.maxWidth > 499.0
@@ -324,13 +383,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Image(
-                          image: AssetImage("${jobDetailList[index]['asset']}"),
-                          width: 80,
-                          height: 80,
-                        ),
-                      ),
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Image.network(
+                            "${jobDetailList[index]['asset']}",
+                            width: jobDetailList[index]['width'],
+                            height: jobDetailList[index]['height'],
+                          )),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 10.0, 0, 5.0),
                         child: Text(

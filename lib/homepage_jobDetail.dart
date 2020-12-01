@@ -1,83 +1,101 @@
 class HomePageJobDetail{
 
   List<Map> detailList = [
-    {
-      'company': 'Google',
-      'salary': '\$6K - \$9K',
-      'label': 'Full Time',
-      'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-      'date': '25/04/20',
-      'asset': "assets/images/google.jpg",
-      'title': 'Web Designing'
-    },
-    {
-      'company': 'Google',
-      'salary': '\$6K - \$9K',
-      'label': 'Full Time',
-      'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-      'date': '25/04/20',
-      'asset': "assets/images/google.jpg",
-      'title': 'Web Designing'
-    },
-    {
-      'company': 'Google',
-      'salary': '\$6K - \$9K',
-      'label': 'Internship',
-      'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-      'date': '25/04/20',
-      'asset': "assets/images/google.jpg",
-      'title': 'Web Designing'
-    },{
-      'company': 'Google',
-      'salary': '\$6K - \$9K',
-      'label': 'Internship',
-      'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-      'date': '25/04/20',
-      'asset': "assets/images/google.jpg",
-      'title': 'Web Designing'
-    },{
-      'company': 'Google',
-      'salary': '\$6K - \$9K',
-      'label': 'Internship',
-      'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-      'date': '25/04/20',
-      'asset': "assets/images/google.jpg",
-      'title': 'Web Designing'
-    },{
-      'company': 'Google',
-      'salary': '\$6K - \$9K',
-      'label': 'Internship',
-      'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-      'date': '25/04/20',
-      'asset': "assets/images/google.jpg",
-      'title': 'Web Designing'
-    },{
-      'company': 'Google',
-      'salary': '\$6K - \$9K',
-      'label': 'Full Time',
-      'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-      'date': '25/04/20',
-      'asset': "assets/images/google.jpg",
-      'title': 'Web Designing'
-    },
-    {
-      'company': 'Google',
-      'salary': '\$6K - \$9K',
-      'label': 'Full Time',
-      'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-      'date': '25/04/20',
-      'asset': "assets/images/google.jpg",
-      'title': 'Web Designing'
-    },
-    {
-      'company': 'Google',
-      'salary': '\$6K - \$9K',
-      'label': 'Full Time',
-      'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
-      'date': '25/04/20',
-      'asset': "assets/images/google.jpg",
-      'title': 'Web Designing'
-    },
+    // {
+    //   'company': 'Google',
+    //   'salary': '\$6K - \$9K',
+    //   'label': 'Full Time',
+    //   'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+    //   'date': '25/04/20',
+    //   'asset': "https://i.pinimg.com/originals/8a/67/76/8a67764994bccfd09ca858bef7774f5b.png",
+    //   'title': 'Web Designing',
+    //   'width': 100,
+    //   'height': 100
+    // },
+    // {
+    //   'company': 'Google',
+    //   'salary': '\$6K - \$9K',
+    //   'label': 'Full Time',
+    //   'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+    //   'date': '25/04/20',
+    //   'asset': "data:image/png;base64,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",
+    //   'title': 'Web Designing',
+    //   'width': 100,
+    //   'height': 100
+    // },
+    // {
+    //   'company': 'Google',
+    //   'salary': '\$6K - \$9K',
+    //   'label': 'Internship',
+    //   'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+    //   'date': '25/04/20',
+    //   'asset': "https://cdn2.iconfinder.com/data/icons/credit-cards-6/156/mastercard-512.png",
+    //   'title': 'Web Designing',
+    //   'width': 100,
+    //   'height': 100
+    // },{
+    //   'company': 'Google',
+    //   'salary': '\$6K - \$9K',
+    //   'label': 'Internship',
+    //   'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+    //   'date': '25/04/20',
+    //   'asset': "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Cisco_logo_blue_2016.svg/1200px-Cisco_logo_blue_2016.svg.png",
+    //   'title': 'Web Designing',
+    //   'width': 100,
+    //   'height': 100
+    // },{
+    //   'company': 'Google',
+    //   'salary': '\$6K - \$9K',
+    //   'label': 'Internship',
+    //   'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+    //   'date': '25/04/20',
+    //   'asset': "https://cdn4.iconfinder.com/data/icons/flat-brand-logo-2/512/nokia-512.png",
+    //   'title': 'Web Designing',
+    //   'width': 120,
+    //   'height': 100
+    // },{
+    //   'company': 'Google',
+    //   'salary': '\$6K - \$9K',
+    //   'label': 'Internship',
+    //   'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+    //   'date': '25/04/20',
+    //   'asset': "data:image/png;base64,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",
+    //   'title': 'Web Designing',
+    //   'width': 100,
+    //   'height': 100
+    // },{
+    //   'company': 'Google',
+    //   'salary': '\$6K - \$9K',
+    //   'label': 'Full Time',
+    //   'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+    //   'date': '25/04/20',
+    //   'asset': "data:image/jpeg;base64,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",
+    //   'title': 'Web Designing',
+    //   'width': 140,
+    //   'height': 100
+    // },
+    // {
+    //   'company': 'Google',
+    //   'salary': '\$6K - \$9K',
+    //   'label': 'Full Time',
+    //   'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+    //   'date': '25/04/20',
+    //   'asset': "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/General_Electric_logo.svg/1200px-General_Electric_logo.svg.png",
+    //   'title': 'Web Designing',
+    //   'width': 70,
+    //   'height': 90
+    // },
+    // {
+    //   'company': 'Google',
+    //   'salary': '\$6K - \$9K',
+    //   'label': 'Full Time',
+    //   'skills': 'CSS3, HTML5, Javascript, Bootstrap, Jquery',
+    //   'date': '25/04/20',
+    //   'asset': "https://ni.scene7.com/is/image/ni/logo_2020?wid=450",
+    //   'title': 'Web Designing',
+    //   'width': 80,
+    //   'height': 80
+    // },
 
   ];
 
