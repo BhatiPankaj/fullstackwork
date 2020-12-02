@@ -6,7 +6,7 @@ import 'package:techjob/job_detail.dart';
 import 'urls.dart';
 import 'homepage_jobDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 
 
 
@@ -41,12 +41,12 @@ class MyApp extends StatelessWidget {
     CollectionReference jobs = FirebaseFirestore.instance.collection('jobs');
     String id = "google-01-12-2020";
     return MaterialApp(
-      title: 'TechJob',
+      title: 'FullStackWork',
       initialRoute: '/',
       routes: {
-        '/': (context) => MyHomePage(title: 'TechJob'),
+        '/': (context) => MyHomePage(title: 'FullStackWork'),
         '/jobDetail': (context) => JobDetail(
-          title: "TechJob",
+          title: "FullStackWork",
         ),
       },
       debugShowCheckedModeBanner: false,
@@ -93,16 +93,15 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _error = false;
 
   // Define an async function to initialize FlutterFire
-  void initializeFlutterFire() async {
+  void addJobsToListFromCloud() async {
     try {
-      // Wait for Firebase to initialize and set `_initialized` state to true
-      await Firebase.initializeApp();
       await FirebaseFirestore.instance
           .collection('jobs')
           .get()
           .then((QuerySnapshot querySnapshot) => {
         querySnapshot.docs.forEach((doc) {
-          HomePageJobDetail().detailList.add({
+          // print(doc["company"]);
+          jobDetail.detailList.add({
             'company': doc["company"],
             'salary': doc["salary"],
             'label': doc["label"],
@@ -117,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
       setState(() {
         _initialized = true;
+        addJobsToList("Both");
       });
     } catch(e) {
       // Set `_error` state to true if Firebase initialization fails
@@ -126,12 +126,11 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
-
+  bool hasData = false;
 
   @override
   void initState() {
-    initializeFlutterFire();
-    // jobs.addJobsToList();
+    addJobsToListFromCloud();
     addJobsToList("Both");
     super.initState();
   }
@@ -223,11 +222,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: RichText(
                       text: TextSpan(children: <TextSpan>[
                         TextSpan(
-                            text: "${widget.title.substring(0, 4)}",
+                            text: "${widget.title.substring(0, 9)}",
                             style:
                                 TextStyle(color: Colors.green, fontSize: 35)),
                         TextSpan(
-                            text: "${widget.title.substring(4, 7)}",
+                            text: "${widget.title.substring(9, 13)}",
                             style: TextStyle(color: Colors.white, fontSize: 35))
                       ]),
                     )),

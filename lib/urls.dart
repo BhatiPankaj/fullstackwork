@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class URLs{
   instagramURL() async {
-    const url = 'https://www.instagram.com/pankaj.bhati412/';
+    const url = 'https://www.instagram.com/fullstackwork/';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

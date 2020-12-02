@@ -40,10 +40,10 @@ class _JobDetailState extends State<JobDetail> {
           child: RichText(
             text: TextSpan(children: <TextSpan>[
               TextSpan(
-                  text: "${widget.title.substring(0, 4)}",
+                  text: "${widget.title.substring(0, 9)}",
                   style: TextStyle(color: Colors.green, fontSize: 27)),
               TextSpan(
-                  text: "${widget.title.substring(4, 7)}",
+                  text: "${widget.title.substring(9, 13)}",
                   style: TextStyle(color: Colors.white, fontSize: 27))
             ]),
           ),

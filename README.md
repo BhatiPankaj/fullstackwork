@@ -1,4 +1,4 @@
-# techjob
+# fullstackwork
 
 A new Flutter application.
 
@@ -6,4 +6,4 @@ A new Flutter application.
 
 This project is a starting point for a Flutter application.
 
-website: https://techjob.web.app/
+website: https://fullstackwork.web.app/
