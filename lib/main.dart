@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:techjob/get_cloud_data/job_description.dart';
-import 'package:techjob/job_detail.dart';
+import 'package:fullstackwork/get_cloud_data/job_description.dart';
+import 'package:fullstackwork/job_detail.dart';
 import 'urls.dart';
 import 'homepage_jobDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -303,7 +303,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: HexColor("#252D40"),
                 child: Center(
                   child: Text(
-                    "© 2020 TechJob",
+                    "© 2020 FullStackWork",
                     style: TextStyle(color: Colors.white),
                   ),
                 ),

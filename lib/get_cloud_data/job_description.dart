@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:techjob/homepage_jobDetail.dart';
+import 'package:fullstackwork/homepage_jobDetail.dart';
 
 class GetJobs{
   

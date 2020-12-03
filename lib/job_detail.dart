@@ -2,7 +2,7 @@ import 'dart:html';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:techjob/urls.dart';
+import 'package:fullstackwork/urls.dart';
 import 'job_description.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -224,7 +224,7 @@ class _JobDetailState extends State<JobDetail> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "© 2020 TechJob",
+                  "© 2020 FullStackWork",
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
                 Row(
