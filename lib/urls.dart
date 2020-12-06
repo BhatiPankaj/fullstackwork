@@ -20,10 +20,10 @@ class URLs{
     }
   }
 
-  techJobURL() async {
-    const url = 'https://techjob.web.app/#/';
+  fullStackWorkURL() async {
+    const url = 'https://fullstackwork.web.app/#/';
     if (await canLaunch(url)) {
-      await launch(url);
+      await launch(url, webOnlyWindowName: '_self');
     } else {
       throw 'Could not launch $url';
     }

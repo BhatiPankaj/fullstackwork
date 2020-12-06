@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:fullstackwork/get_cloud_data/job_description.dart';
+import 'package:fullstackwork/get_cloud_data/job_detail.dart';
 import 'package:fullstackwork/job_detail.dart';
 import 'urls.dart';
 import 'homepage_jobDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
+import 'package:connectivity/connectivity.dart';
 
 
-
+Map jobDescription;
 
 void main() {
   runApp(MyApp());
@@ -17,7 +17,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   static const int _blackPrimaryValue = 0xFF000000;
-  CollectionReference users = FirebaseFirestore.instance.collection('sdfsdfg');
+
+  // CollectionReference users = FirebaseFirestore.instance.collection('sdfsdfg');
 
   // This widget is the root of your application.
   static const MaterialColor primaryBlack = MaterialColor(
@@ -39,15 +40,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CollectionReference jobs = FirebaseFirestore.instance.collection('jobs');
-    String id = "google-01-12-2020";
     return MaterialApp(
       title: 'FullStackWork',
       initialRoute: '/',
       routes: {
         '/': (context) => MyHomePage(title: 'FullStackWork'),
         '/jobDetail': (context) => JobDetail(
-          title: "FullStackWork",
-        ),
+              title: "FullStackWork",
+              jobDetailList: jobDescription,
+            ),
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -71,20 +72,19 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   GetJobs jobs = GetJobs();
   URLs _urLs = URLs();
-  HomePageJobDetail jobDetail = HomePageJobDetail();
   List<Map> jobDetailList = [];
 
   void addJobsToList(String label) {
     if (label == "Both") {
       if (jobDetailList.isNotEmpty) jobDetailList.clear();
-      jobDetail.detailList.forEach((element) => jobDetailList.add(element));
+      detailList.forEach((element) => jobDetailList.add(element));
     } else if (label == "Internship") {
       if (jobDetailList.isNotEmpty) jobDetailList.clear();
-      jobDetail.detailList.forEach((element) =>
+      detailList.forEach((element) =>
           element['label'] == label ? jobDetailList.add(element) : null);
     } else {
       if (jobDetailList.isNotEmpty) jobDetailList.clear();
-      jobDetail.detailList.forEach((element) =>
+      detailList.forEach((element) =>
           element['label'] == label ? jobDetailList.add(element) : null);
     }
   }
@@ -93,61 +93,121 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _error = false;
 
   // Define an async function to initialize FlutterFire
-  void addJobsToListFromCloud() async {
+  void checkConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if(connectivityResult != ConnectivityResult.none){
+      addJobsToListFromDatabase();
+    }
+  }
+
+
+  void addJobsToListFromDatabase() async {
     try {
-      await FirebaseFirestore.instance
-          .collection('jobs')
-          .get()
-          .then((QuerySnapshot querySnapshot) => {
-        querySnapshot.docs.forEach((doc) {
-          // print(doc["company"]);
-          jobDetail.detailList.add({
-            'company': doc["company"],
-            'salary': doc["salary"],
-            'label': doc["label"],
-            'skills': doc["skills"],
-            'date': doc["date"],
-            'asset': doc["imgURL"],
-            'title': doc["title"],
-            'width': doc["width"],
-            'height': doc["height"]
-          });
-        })
-      });
+      await GetJobs().addJobs();
       setState(() {
         _initialized = true;
         addJobsToList("Both");
       });
-    } catch(e) {
-      // Set `_error` state to true if Firebase initialization fails
-      print(e);
+    } catch (e) {
+      print(e + " Pankaj Bhati");
       setState(() {
         _error = true;
       });
     }
   }
+
   bool hasData = false;
 
   @override
   void initState() {
-    addJobsToListFromCloud();
+    checkConnectivity();
+    // addJobsToListFromDatabase();
     addJobsToList("Both");
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if(_error) {
-      return Center(child: Text("Something went wrong!"),);
+    if (_error) {
+      return Center(
+        child: Text("Something went wrong!"),
+      );
     }
 
     // Show a loader until FlutterFire is initialized
     if (!_initialized) {
       return Center(child: CircularProgressIndicator());
     }
-    // CollectionReference jobs = FirebaseFirestore.instance.collection('jobs');
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
+        drawer: Drawer(
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(8, 40, 8, 8),
+            color: HexColor("#252D40"),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FlatButton(
+                      // hoverColor: Colors.green,
+                      onPressed: () {
+                        setState(() {
+                          addJobsToList("Internship");
+                        });
+                        Navigator.of(context).pop();
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(80)),
+                      splashColor: Colors.green,
+                      child: Text("INTERNSHIPS",
+                          style: TextStyle(color: Colors.white, fontSize: 14))),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 10.0, 8.0),
+                  child: FlatButton(
+                      // hoverColor: Colors.green,
+                      onPressed: () {
+                        setState(() {
+                          addJobsToList("Full Time");
+                        });
+                        Navigator.of(context).pop();
+                      },
+                      splashColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40)),
+                      child: Text("JOBS",
+                          style: TextStyle(color: Colors.white, fontSize: 14))),
+                ),
+                InkWell(
+                  onTap: () {
+                    _urLs.instagramURL();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                    child: Image(
+                      image: AssetImage("assets/images/instagram.png"),
+                      width: 50,
+                      height: 50,
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    _urLs.linkedinURL();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 15, 10),
+                    child: Image(
+                      image: AssetImage("assets/images/linkedin.webp"),
+                      width: 33,
+                      height: 33,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
         appBar: constraints.maxWidth > 499.0
             ? AppBar(
                 toolbarHeight: 80,
@@ -224,51 +284,33 @@ class _MyHomePageState extends State<MyHomePage> {
                         TextSpan(
                             text: "${widget.title.substring(0, 9)}",
                             style:
-                                TextStyle(color: Colors.green, fontSize: 35)),
+                                TextStyle(color: Colors.green, fontSize: 30)),
                         TextSpan(
                             text: "${widget.title.substring(9, 13)}",
-                            style: TextStyle(color: Colors.white, fontSize: 35))
+                            style: TextStyle(color: Colors.white, fontSize: 30))
                       ]),
                     )),
                 backgroundColor: HexColor("#252D40"),
               )
             : AppBar(
                 toolbarHeight: 70,
-                // automaticallyImplyLeading: false,
+                automaticallyImplyLeading: true,
                 centerTitle: true,
-                leading: InkWell(
-                  child: Icon(Icons.apps_rounded),
-                  onTap: () {
-                    // return ExpansionPanelList(children: [
-                    //   ExpansionPanel(headerBuilder: , body: InkWell(
-                    //     onTap: () {
-                    //       _urLs.linkedinURL();
-                    //     },
-                    //     child: Padding(
-                    //       padding: const EdgeInsets.fromLTRB(0, 10, 15, 10),
-                    //       child: Image(
-                    //         image: AssetImage("assets/images/linkedin.webp"),
-                    //         width: 33,
-                    //         height: 33,
-                    //       ),
-                    //     ),
-                    //   ),)
-                    // ],);
-                  },
-                ),
                 title: InkWell(
                     onTap: () {
-                      _urLs.techJobURL();
+                      setState(() {
+                        addJobsToList("Both");
+                      });
                     },
                     child: RichText(
                       text: TextSpan(children: <TextSpan>[
                         TextSpan(
-                            text: "${widget.title.substring(0, 4)}",
+                            text: "${widget.title.substring(0, 9)}",
                             style:
-                                TextStyle(color: Colors.green, fontSize: 35)),
+                                TextStyle(color: Colors.green, fontSize: 26)),
                         TextSpan(
-                            text: "${widget.title.substring(4, 7)}",
-                            style: TextStyle(color: Colors.white, fontSize: 35))
+                            text: "${widget.title.substring(9, 13)}",
+                            style: TextStyle(color: Colors.white, fontSize: 26))
                       ]),
                     )),
                 backgroundColor: HexColor("#252D40"),
@@ -282,12 +324,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: List.generate(jobDetailList.length, (index) {
                   return InkWell(
                     child: jobCard(index),
-                    // _internship == false && _job == false
-                    //     ? jobCard(index, "Both")
-                    //     : (_internship == true
-                    //         ? jobCard(index, "Internship")
-                    //         : jobCard(index, "Job")),
                     onTap: () {
+                      jobDescription = jobDetailList[index];
                       Navigator.pushNamed(context, '/jobDetail');
                       // _launchURL();
                     },
@@ -384,7 +422,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       Padding(
                           padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: Image.network(
-                            "${jobDetailList[index]['asset']}",
+                            "${jobDetailList[index]['imgURL']}",
                             width: jobDetailList[index]['width'],
                             height: jobDetailList[index]['height'],
                           )),

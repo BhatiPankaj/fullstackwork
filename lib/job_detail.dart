@@ -7,9 +7,10 @@ import 'job_description.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class JobDetail extends StatefulWidget {
-  JobDetail({Key key, this.title}) : super(key: key);
+  JobDetail({Key key, this.title, this.jobDetailList}) : super(key: key);
 
   final String title;
+  final Map jobDetailList;
 
   @override
   _JobDetailState createState() => _JobDetailState();
@@ -19,15 +20,6 @@ class _JobDetailState extends State<JobDetail> {
   JobDescription _jobDescription = JobDescription();
   URLs _urLs = URLs();
 
-  // @override
-  // void initState() {
-  //   WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
-  //   super.initState();
-  // }
-  // _afterLayout(_) {
-  //   getSize();
-  // }
-  //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +28,9 @@ class _JobDetailState extends State<JobDetail> {
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: InkWell(
-          onTap: (){},
+          onTap: () {
+            _urLs.fullStackWorkURL();
+          },
           child: RichText(
             text: TextSpan(children: <TextSpan>[
               TextSpan(
@@ -65,10 +59,10 @@ class _JobDetailState extends State<JobDetail> {
                     child: Card(
                       shadowColor: Colors.black26,
                       elevation: 4.0,
-                      child: Image(
-                        image: AssetImage("assets/images/google.jpg"),
-                        width: 140,
-                        height: 140,
+                      child: Image.network(
+                        widget.jobDetailList['imgURL'],
+                        width: widget.jobDetailList['width'],
+                        height: widget.jobDetailList['height'],
                       ),
                     ),
                   ),
@@ -79,12 +73,12 @@ class _JobDetailState extends State<JobDetail> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 17, 20, 6),
                         child: Text(
-                          "Front End Developer",
+                          widget.jobDetailList['title'],
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 26),
                         ),
                       ),
-                      Text("Google",
+                      Text(widget.jobDetailList['company'],
                           style: TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 16)),
                       Row(
@@ -94,7 +88,7 @@ class _JobDetailState extends State<JobDetail> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 16, 35, 4),
                             child: Text(
-                              "\$50k - \$70k",
+                              widget.jobDetailList['salary'],
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
@@ -109,7 +103,7 @@ class _JobDetailState extends State<JobDetail> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 16, 0, 4),
                             child: Text(
-                              "Surat",
+                              widget.jobDetailList['location'],
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
@@ -171,7 +165,7 @@ class _JobDetailState extends State<JobDetail> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                child: Text("Full Time",
+                                child: Text(widget.jobDetailList['label'],
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 18,
@@ -179,7 +173,7 @@ class _JobDetailState extends State<JobDetail> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                child: Text("5 Years",
+                                child: Text(widget.jobDetailList['experience'],
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 18,
@@ -187,7 +181,7 @@ class _JobDetailState extends State<JobDetail> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                child: Text("2019, 2020",
+                                child: Text(widget.jobDetailList['batch'],
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 18,
@@ -204,15 +198,15 @@ class _JobDetailState extends State<JobDetail> {
             ),
             LayoutBuilder(builder: (context, constraints) {
               if (constraints.maxWidth > 1200) {
-                return _jobDescription.jobDetailWidget(250.0, 250.0);
+                return _jobDescription.jobDetailWidget(250.0, 250.0, widget.jobDetailList);
               } else if (constraints.maxWidth > 1000) {
-                return _jobDescription.jobDetailWidget(150, 260);
+                return _jobDescription.jobDetailWidget(150, 260, widget.jobDetailList);
               } else if (constraints.maxWidth > 800) {
-                return _jobDescription.jobDetailWidget(100, 260);
+                return _jobDescription.jobDetailWidget(100, 260, widget.jobDetailList);
               } else if (constraints.maxWidth > 550) {
-                return _jobDescription.jobDetailWidget(50, 400);
+                return _jobDescription.jobDetailWidget(50, 400, widget.jobDetailList);
               } else {
-                return _jobDescription.jobDetailWidget(30, 510);
+                return _jobDescription.jobDetailWidget(30, 510, widget.jobDetailList);
               }
             }),
           ]),

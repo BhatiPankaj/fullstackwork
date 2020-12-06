@@ -1,4 +1,3 @@
-class HomePageJobDetail{
 
   List<Map> detailList = [
     // {
@@ -98,5 +97,3 @@ class HomePageJobDetail{
     // },
 
   ];
-
-}
