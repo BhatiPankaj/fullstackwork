@@ -27,21 +27,31 @@ class _JobDetailState extends State<JobDetail> {
         toolbarHeight: 70,
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: InkWell(
-          onTap: () {
-            _urLs.fullStackWorkURL();
-          },
-          child: RichText(
-            text: TextSpan(children: <TextSpan>[
-              TextSpan(
-                  text: "${widget.title.substring(0, 9)}",
-                  style: TextStyle(color: Colors.green, fontSize: 27)),
-              TextSpan(
-                  text: "${widget.title.substring(9, 13)}",
-                  style: TextStyle(color: Colors.white, fontSize: 27))
-            ]),
-          ),
-        ),
+        title: GestureDetector(
+            onTap: () {
+              _urLs.fullStackWorkURL();
+            },
+            child: Image.asset(
+              "assets/images/fullstackwork.jpg",
+              width: 90,
+              height: 47,
+            )),
+
+        // InkWell(
+        //   onTap: () {
+        //     _urLs.fullStackWorkURL();
+        //   },
+        //   child: RichText(
+        //     text: TextSpan(children: <TextSpan>[
+        //       TextSpan(
+        //           text: "${widget.title.substring(0, 9)}",
+        //           style: TextStyle(color: Colors.green, fontSize: 27)),
+        //       TextSpan(
+        //           text: "${widget.title.substring(9, 13)}",
+        //           style: TextStyle(color: Colors.white, fontSize: 27))
+        //     ]),
+        //   ),
+        // ),
         backgroundColor: HexColor("#252D40"),
         elevation: 2.0,
       ),

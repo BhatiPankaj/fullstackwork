@@ -8,7 +8,6 @@ import 'homepage_jobDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 
-
 Map jobDescription;
 
 void main() {
@@ -95,11 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
   // Define an async function to initialize FlutterFire
   void checkConnectivity() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if(connectivityResult != ConnectivityResult.none){
+    if (connectivityResult != ConnectivityResult.none) {
       addJobsToListFromDatabase();
     }
   }
-
 
   void addJobsToListFromDatabase() async {
     try {
@@ -178,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Text("JOBS",
                           style: TextStyle(color: Colors.white, fontSize: 14))),
                 ),
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     _urLs.instagramURL();
                   },
@@ -191,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     _urLs.linkedinURL();
                   },
@@ -244,75 +242,107 @@ class _MyHomePageState extends State<MyHomePage> {
                             style:
                                 TextStyle(color: Colors.white, fontSize: 15))),
                   ),
-                  InkWell(
-                    onTap: () {
-                      _urLs.instagramURL();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                      child: Image(
-                        image: AssetImage("assets/images/instagram.png"),
-                        width: 50,
-                        height: 50,
-                      ),
+                  SizedBox(
+                    height: 20,
+                    width: 80,
+                    child: FlatButton(
+                      onPressed: () {
+                        _urLs.instagramURL();
+                      },
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      // shape: RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.circular(20)),
+                      // child: Padding(
+                      //   padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                        child: Image(
+                          image: AssetImage("assets/images/instagram.png"),
+                          width: 50,
+                          height: 50,
+                        ),
+                      // ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
+                  FlatButton(
+                    padding: const EdgeInsets.all(0),
+                    onPressed: () {
                       _urLs.linkedinURL();
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 15, 10),
+                    // child: Padding(
+                      // padding: const EdgeInsets.fromLTRB(0, 10, 15, 10),
                       child: Image(
                         image: AssetImage("assets/images/linkedin.webp"),
                         width: 33,
                         height: 33,
                       ),
-                    ),
+                    // ),
                   ),
                 ],
                 automaticallyImplyLeading: false,
-                title: InkWell(
+                title: GestureDetector(
                     onTap: () {
-                      // _urLs.techJobURL();
                       setState(() {
                         addJobsToList("Both");
                       });
                     },
-                    child: RichText(
-                      text: TextSpan(children: <TextSpan>[
-                        TextSpan(
-                            text: "${widget.title.substring(0, 9)}",
-                            style:
-                                TextStyle(color: Colors.green, fontSize: 30)),
-                        TextSpan(
-                            text: "${widget.title.substring(9, 13)}",
-                            style: TextStyle(color: Colors.white, fontSize: 30))
-                      ]),
+                    child: Image.asset(
+                      "assets/images/fullstackwork.jpg",
+                      width: 90,
+                      height: 47,
+                      fit: BoxFit.cover,
                     )),
+                // InkWell(
+                //     onTap: () {
+                //       // _urLs.techJobURL();
+                //       setState(() {
+                //         addJobsToList("Both");
+                //       });
+                //     },
+                //     child: RichText(
+                //       text: TextSpan(children: <TextSpan>[
+                //         TextSpan(
+                //             text: "${widget.title.substring(0, 9)}",
+                //             style:
+                //                 TextStyle(color: Colors.green, fontSize: 30)),
+                //         TextSpan(
+                //             text: "${widget.title.substring(9, 13)}",
+                //             style: TextStyle(color: Colors.white, fontSize: 30))
+                //       ]),
+                //     )),
                 backgroundColor: HexColor("#252D40"),
               )
             : AppBar(
                 toolbarHeight: 70,
                 automaticallyImplyLeading: true,
                 centerTitle: true,
-                title: InkWell(
+                title: GestureDetector(
                     onTap: () {
+                      // _urLs.techJobURL();
                       setState(() {
                         addJobsToList("Both");
                       });
                     },
-                    child: RichText(
-                      text: TextSpan(children: <TextSpan>[
-                        TextSpan(
-                            text: "${widget.title.substring(0, 9)}",
-                            style:
-                                TextStyle(color: Colors.green, fontSize: 26)),
-                        TextSpan(
-                            text: "${widget.title.substring(9, 13)}",
-                            style: TextStyle(color: Colors.white, fontSize: 26))
-                      ]),
+                    child: Image.asset(
+                      "assets/images/fullstackwork.jpg",
+                      width: 90,
+                      height: 47,
                     )),
+                // InkWell(
+                //     onTap: () {
+                //       setState(() {
+                //         addJobsToList("Both");
+                //       });
+                //     },
+                //     child: RichText(
+                //       text: TextSpan(children: <TextSpan>[
+                //         TextSpan(
+                //             text: "${widget.title.substring(0, 9)}",
+                //             style:
+                //                 TextStyle(color: Colors.green, fontSize: 26)),
+                //         TextSpan(
+                //             text: "${widget.title.substring(9, 13)}",
+                //             style: TextStyle(color: Colors.white, fontSize: 26))
+                //       ]),
+                //     )),
                 backgroundColor: HexColor("#252D40"),
               ),
         body: ListView(
