@@ -7,9 +7,10 @@ import 'urls.dart';
 import 'homepage_jobDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:fullstackwork/circular_progress_indicator.dart';
 
 Map jobDescription;
-
+dynamic id;
 void main() {
   runApp(MyApp());
 }
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => MyHomePage(title: 'FullStackWork'),
         '/jobDetail': (context) => JobDetail(
               title: "FullStackWork",
-              jobDetailList: jobDescription,
+              // jobDetailList: jobDescription,
             ),
       },
       debugShowCheckedModeBanner: false,
@@ -90,6 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool _initialized = false;
   bool _error = false;
+  bool idUpdated = false;
 
   // Define an async function to initialize FlutterFire
   void checkConnectivity() async {
@@ -136,7 +138,12 @@ class _MyHomePageState extends State<MyHomePage> {
     if (!_initialized) {
       return Center(child: CircularProgressIndicator());
     }
+    if(idUpdated == true){
+      // return Center(child: CircularProgressIndicator());
+      return Center(child: CircularProgressIndicator());
+    }
     return LayoutBuilder(builder: (context, constraints) {
+
       return Scaffold(
         drawer: Drawer(
           child: Container(
@@ -355,9 +362,23 @@ class _MyHomePageState extends State<MyHomePage> {
                   return InkWell(
                     child: jobCard(index),
                     onTap: () {
-                      jobDescription = jobDetailList[index];
+                      id = jobDetailList[index]['id'];
+                      // jobDescription = jobDetailList[index];
+                      updateID(index);
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => LoadingIndicator()),
+                      // );
+                      // CircularProgressIndicator();
+                      // GetJobs().getJobByID();
+                      // if(idUpdated == false)
+                      //   return CircularProgressIndicator();
+                      // else
+                      // return CircularProgressIndicator();
                       Navigator.pushNamed(context, '/jobDetail');
-                      // _launchURL();
+                      // setState(() {
+                      //   idUpdated = true;
+                      // });
                     },
                     hoverColor: Colors.green[50],
                   );
@@ -504,4 +525,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             )));
   }
+  void updateID(index) async{
+    await GetJobs().updateID(jobDetailList[index]['id']);
+    // setState(() {
+    //   idUpdated = true;
+    // });
+  }
+
 }

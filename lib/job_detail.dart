@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:html';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
@@ -5,12 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:fullstackwork/urls.dart';
 import 'job_description.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:fullstackwork/get_cloud_data/job_detail.dart';
 
 class JobDetail extends StatefulWidget {
-  JobDetail({Key key, this.title, this.jobDetailList}) : super(key: key);
+  JobDetail({Key key, this.title}) : super(key: key);
 
   final String title;
-  final Map jobDetailList;
+
 
   @override
   _JobDetailState createState() => _JobDetailState();
@@ -18,10 +20,29 @@ class JobDetail extends StatefulWidget {
 
 class _JobDetailState extends State<JobDetail> {
   JobDescription _jobDescription = JobDescription();
+  Map jobDetailList;
   URLs _urLs = URLs();
+  bool initialized = false;
+  getData() async {
+    jobDetailList = await GetJobs().getJobByID();
+    setState(() {
+      initialized = true;
+    });
+  }
+
+  @override
+  void initState() {
+    getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // getData();
+    if(initialized == false){
+      return Center(child: CircularProgressIndicator());
+    }
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,
@@ -36,26 +57,10 @@ class _JobDetailState extends State<JobDetail> {
               width: 90,
               height: 47,
             )),
-
-        // InkWell(
-        //   onTap: () {
-        //     _urLs.fullStackWorkURL();
-        //   },
-        //   child: RichText(
-        //     text: TextSpan(children: <TextSpan>[
-        //       TextSpan(
-        //           text: "${widget.title.substring(0, 9)}",
-        //           style: TextStyle(color: Colors.green, fontSize: 27)),
-        //       TextSpan(
-        //           text: "${widget.title.substring(9, 13)}",
-        //           style: TextStyle(color: Colors.white, fontSize: 27))
-        //     ]),
-        //   ),
-        // ),
         backgroundColor: HexColor("#252D40"),
         elevation: 2.0,
       ),
-      body: ListView(
+      body: jobDetailList == null && getData() ? CircularProgressIndicator() :  ListView(
         children: [
           Stack(children: [
             Container(
@@ -70,9 +75,9 @@ class _JobDetailState extends State<JobDetail> {
                       shadowColor: Colors.black26,
                       elevation: 4.0,
                       child: Image.network(
-                        widget.jobDetailList['imgURL'],
-                        width: widget.jobDetailList['width'],
-                        height: widget.jobDetailList['height'],
+                        jobDetailList['imgURL'],
+                        width: jobDetailList['width'],
+                        height: jobDetailList['height'],
                       ),
                     ),
                   ),
@@ -83,12 +88,12 @@ class _JobDetailState extends State<JobDetail> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 17, 20, 6),
                         child: Text(
-                          widget.jobDetailList['title'],
+                          jobDetailList['title'],
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 26),
                         ),
                       ),
-                      Text(widget.jobDetailList['company'],
+                      Text(jobDetailList['company'],
                           style: TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 16)),
                       Row(
@@ -98,7 +103,7 @@ class _JobDetailState extends State<JobDetail> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 16, 35, 4),
                             child: Text(
-                              widget.jobDetailList['salary'],
+                              jobDetailList['salary'],
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
@@ -113,7 +118,7 @@ class _JobDetailState extends State<JobDetail> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 16, 0, 4),
                             child: Text(
-                              widget.jobDetailList['location'],
+                              jobDetailList['location'],
                               style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16,
@@ -175,7 +180,7 @@ class _JobDetailState extends State<JobDetail> {
                             children: [
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                child: Text(widget.jobDetailList['label'],
+                                child: Text(jobDetailList['label'],
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 18,
@@ -183,7 +188,7 @@ class _JobDetailState extends State<JobDetail> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                child: Text(widget.jobDetailList['experience'],
+                                child: Text(jobDetailList['experience'],
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 18,
@@ -191,7 +196,7 @@ class _JobDetailState extends State<JobDetail> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                                child: Text(widget.jobDetailList['batch'],
+                                child: Text(jobDetailList['batch'],
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
                                         fontSize: 18,
@@ -208,15 +213,15 @@ class _JobDetailState extends State<JobDetail> {
             ),
             LayoutBuilder(builder: (context, constraints) {
               if (constraints.maxWidth > 1200) {
-                return _jobDescription.jobDetailWidget(250.0, 250.0, widget.jobDetailList);
+                return _jobDescription.jobDetailWidget(250.0, 250.0, jobDetailList);
               } else if (constraints.maxWidth > 1000) {
-                return _jobDescription.jobDetailWidget(150, 260, widget.jobDetailList);
+                return _jobDescription.jobDetailWidget(150, 260, jobDetailList);
               } else if (constraints.maxWidth > 800) {
-                return _jobDescription.jobDetailWidget(100, 260, widget.jobDetailList);
+                return _jobDescription.jobDetailWidget(100, 260, jobDetailList);
               } else if (constraints.maxWidth > 550) {
-                return _jobDescription.jobDetailWidget(50, 400, widget.jobDetailList);
+                return _jobDescription.jobDetailWidget(50, 400, jobDetailList);
               } else {
-                return _jobDescription.jobDetailWidget(30, 510, widget.jobDetailList);
+                return _jobDescription.jobDetailWidget(30, 510, jobDetailList);
               }
             }),
           ]),

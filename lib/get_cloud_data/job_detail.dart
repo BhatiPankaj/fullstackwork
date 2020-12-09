@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fullstackwork/homepage_jobDetail.dart';
+import 'package:fullstackwork/main.dart';
 
 class GetJobs{
 
@@ -26,7 +27,8 @@ class GetJobs{
             'education': doc["education"],
             'experience': doc['experience'],
             'requirements': doc['requirements'],
-            'location': doc['location']
+            'location': doc['location'],
+            'id': doc.id
           });
         })
       });
@@ -34,6 +36,32 @@ class GetJobs{
       print(e + " Pankaj Bhati");
       return e;
     }
+  }
+
+  Future<Map> getJobByID() async {
+
+    Map data;
+    try {
+      await FirebaseFirestore.instance
+          .collection('jobs').doc(id.toString()).get().then((DocumentSnapshot documentSnapshot) => {data = documentSnapshot.data()});
+      return data;
+    } catch(e) {
+      print(e + " Pankaj Bhati");
+      return e;
+    }
+  }
+
+
+
+  Future<void> updateID( dynamic id) async{
+     try {
+       await FirebaseFirestore.instance.collection('id')
+           .doc('id')
+           .update({'id': id})
+           .then((value) => print("id Updated"));
+     } catch(e) {
+       print("Failed to update user: $e");
+     }
   }
 
 }
