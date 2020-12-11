@@ -183,19 +183,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Text("JOBS",
                           style: TextStyle(color: Colors.white, fontSize: 14))),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    _urLs.instagramURL();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                    child: Image(
-                      image: AssetImage("assets/images/instagram.png"),
-                      width: 50,
-                      height: 50,
-                    ),
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     _urLs.instagramURL();
+                //   },
+                //   child: Padding(
+                //     padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                //     child: Image(
+                //       image: AssetImage("assets/images/instagram.png"),
+                //       width: 50,
+                //       height: 50,
+                //     ),
+                //   ),
+                // ),
                 GestureDetector(
                   onTap: () {
                     _urLs.linkedinURL();
@@ -249,26 +249,26 @@ class _MyHomePageState extends State<MyHomePage> {
                             style:
                                 TextStyle(color: Colors.white, fontSize: 15))),
                   ),
-                  SizedBox(
-                    height: 20,
-                    width: 80,
-                    child: FlatButton(
-                      onPressed: () {
-                        _urLs.instagramURL();
-                      },
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      // shape: RoundedRectangleBorder(
-                      //     borderRadius: BorderRadius.circular(20)),
-                      // child: Padding(
-                      //   padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                        child: Image(
-                          image: AssetImage("assets/images/instagram.png"),
-                          width: 50,
-                          height: 50,
-                        ),
-                      // ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: 20,
+                  //   width: 80,
+                  //   child: FlatButton(
+                  //     onPressed: () {
+                  //       _urLs.instagramURL();
+                  //     },
+                  //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  //     // shape: RoundedRectangleBorder(
+                  //     //     borderRadius: BorderRadius.circular(20)),
+                  //     // child: Padding(
+                  //     //   padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                  //       child: Image(
+                  //         image: AssetImage("assets/images/instagram.png"),
+                  //         width: 50,
+                  //         height: 50,
+                  //       ),
+                  //     // ),
+                  //   ),
+                  // ),
                   FlatButton(
                     padding: const EdgeInsets.all(0),
                     onPressed: () {

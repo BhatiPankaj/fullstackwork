@@ -12,7 +12,7 @@ class URLs{
   }
 
   linkedinURL() async {
-    const url = 'https://www.linkedin.com/in/pankaj-bhati-90021a166/';
+    const url = 'https://www.linkedin.com/company/fullstackwork-jobs-internships-for-freshers/posts/?feedView=all&viewAsMember=true';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

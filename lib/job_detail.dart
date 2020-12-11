@@ -238,19 +238,19 @@ class _JobDetailState extends State<JobDetail> {
                 ),
                 Row(
                   children: [
-                    InkWell(
-                      onTap: () {
-                        _urLs.instagramURL();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                        child: Image(
-                          image: AssetImage("assets/images/instagram.png"),
-                          width: 50,
-                          height: 50,
-                        ),
-                      ),
-                    ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     _urLs.instagramURL();
+                    //   },
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
+                    //     child: Image(
+                    //       image: AssetImage("assets/images/instagram.png"),
+                    //       width: 50,
+                    //       height: 50,
+                    //     ),
+                    //   ),
+                    // ),
                     InkWell(
                       onTap: () {
                         _urLs.linkedinURL();
