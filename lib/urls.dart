@@ -21,7 +21,7 @@ class URLs{
   }
 
   fullStackWorkURL() async {
-    const url = 'https://fullstackwork.web.app/#/';
+    const url = 'https://fullstackwork.live/#/';
     if (await canLaunch(url)) {
       await launch(url, webOnlyWindowName: '_self');
     } else {

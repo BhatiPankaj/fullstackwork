@@ -1,6 +1,7 @@
-import 'dart:html';
+import 'dart:html' as html;
 
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobDescription {
   Widget jobDetailWidget(double width, double height, Map jobDescription) {
@@ -9,6 +10,9 @@ class JobDescription {
         jobDescription['description'].toString().split('x-x');
     final List requirements =
         jobDescription['requirements'].toString().split('x-x');
+    var url = jobDescription['apply'];
+
+
     return Padding(
       padding: EdgeInsets.fromLTRB(width, height, width, height / 3),
       child: Card(
@@ -87,7 +91,7 @@ class JobDescription {
               Padding(
                 padding: const EdgeInsets.fromLTRB(17, 0, 0, 8),
                 child: Text(
-                  "Any Graduate in Any Specialization, Graduation Not Required",
+                  jobDescription['education'],
                   style: TextStyle(fontSize: 15),
                 ),
               ),
@@ -98,7 +102,9 @@ class JobDescription {
                   color: Colors.green,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(6))),
-                  onPressed: () {},
+                  onPressed: () {
+                    html.window.open(url, 'bhatipankaj');
+                  },
                   hoverElevation: 10.0,
                   child: Text(
                     "Apply for this job",

@@ -8,6 +8,7 @@ class GetJobs{
     try {
       await FirebaseFirestore.instance
           .collection('jobs')
+          .orderBy("sort", descending: true)
           .get()
           .then((QuerySnapshot querySnapshot) => {
         querySnapshot.docs.forEach((doc) {
@@ -28,12 +29,13 @@ class GetJobs{
             'experience': doc['experience'],
             'requirements': doc['requirements'],
             'location': doc['location'],
+            'apply': doc['apply'],
             'id': doc.id
           });
         })
       });
     } catch(e) {
-      print(e + " Pankaj Bhati");
+      print(e);
       return e;
     }
   }

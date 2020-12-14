@@ -494,7 +494,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           '${jobDetailList[index]['skills']}',
                           style: TextStyle(
                               color: Colors.black.withOpacity(0.6),
-                              fontSize: 17),
+                              fontSize: 14),
                           textAlign: TextAlign.center,
                         ),
                       ),
