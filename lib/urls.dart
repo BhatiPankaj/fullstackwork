@@ -12,7 +12,7 @@ class URLs{
   }
 
   linkedinURL() async {
-    const url = 'https://www.linkedin.com/company/fullstackwork-jobs-internships-for-freshers/posts/?feedView=all&viewAsMember=true';
+    const url = 'https://www.linkedin.com/company/fullstackwork';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
