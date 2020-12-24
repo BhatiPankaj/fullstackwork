@@ -32,6 +32,8 @@ dependencies:
   url_launcher:
   cloud_firestore:
   connectivity: ^2.0.2
+  draggable_scrollbar: ^0.0.4
+
 
 
 

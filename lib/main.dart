@@ -8,6 +8,9 @@ import 'homepage_jobDetail.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:fullstackwork/circular_progress_indicator.dart';
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
+import 'package:fullstackwork/admin_panel.dart';
+
 
 Map jobDescription;
 dynamic id;
@@ -49,6 +52,7 @@ class MyApp extends StatelessWidget {
               title: "FullStackWork",
               // jobDetailList: jobDescription,
             ),
+        '/admin': (context) => AdminPanel()
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -115,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
   }
-
+  ScrollController _controller;
   bool hasData = false;
 
   @override
@@ -123,6 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
     checkConnectivity();
     // addJobsToListFromDatabase();
     addJobsToList("Both");
+    _controller = ScrollController();
     super.initState();
   }
 
@@ -138,10 +143,12 @@ class _MyHomePageState extends State<MyHomePage> {
     if (!_initialized) {
       return Center(child: CircularProgressIndicator());
     }
+
     if(idUpdated == true){
       // return Center(child: CircularProgressIndicator());
       return Center(child: CircularProgressIndicator());
     }
+
     return LayoutBuilder(builder: (context, constraints) {
 
       return Scaffold(
@@ -183,19 +190,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Text("JOBS",
                           style: TextStyle(color: Colors.white, fontSize: 14))),
                 ),
-                // GestureDetector(
-                //   onTap: () {
-                //     _urLs.instagramURL();
-                //   },
-                //   child: Padding(
-                //     padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                //     child: Image(
-                //       image: AssetImage("assets/images/instagram.png"),
-                //       width: 50,
-                //       height: 50,
-                //     ),
-                //   ),
-                // ),
                 GestureDetector(
                   onTap: () {
                     _urLs.linkedinURL();
@@ -249,26 +243,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             style:
                                 TextStyle(color: Colors.white, fontSize: 15))),
                   ),
-                  // SizedBox(
-                  //   height: 20,
-                  //   width: 80,
-                  //   child: FlatButton(
-                  //     onPressed: () {
-                  //       _urLs.instagramURL();
-                  //     },
-                  //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  //     // shape: RoundedRectangleBorder(
-                  //     //     borderRadius: BorderRadius.circular(20)),
-                  //     // child: Padding(
-                  //     //   padding: const EdgeInsets.fromLTRB(0, 10, 10, 10),
-                  //       child: Image(
-                  //         image: AssetImage("assets/images/instagram.png"),
-                  //         width: 50,
-                  //         height: 50,
-                  //       ),
-                  //     // ),
-                  //   ),
-                  // ),
                   FlatButton(
                     padding: const EdgeInsets.all(0),
                     onPressed: () {
@@ -297,24 +271,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 47,
                       fit: BoxFit.cover,
                     )),
-                // InkWell(
-                //     onTap: () {
-                //       // _urLs.techJobURL();
-                //       setState(() {
-                //         addJobsToList("Both");
-                //       });
-                //     },
-                //     child: RichText(
-                //       text: TextSpan(children: <TextSpan>[
-                //         TextSpan(
-                //             text: "${widget.title.substring(0, 9)}",
-                //             style:
-                //                 TextStyle(color: Colors.green, fontSize: 30)),
-                //         TextSpan(
-                //             text: "${widget.title.substring(9, 13)}",
-                //             style: TextStyle(color: Colors.white, fontSize: 30))
-                //       ]),
-                //     )),
                 backgroundColor: HexColor("#252D40"),
               )
             : AppBar(
@@ -333,72 +289,48 @@ class _MyHomePageState extends State<MyHomePage> {
                       width: 90,
                       height: 47,
                     )),
-                // InkWell(
-                //     onTap: () {
-                //       setState(() {
-                //         addJobsToList("Both");
-                //       });
-                //     },
-                //     child: RichText(
-                //       text: TextSpan(children: <TextSpan>[
-                //         TextSpan(
-                //             text: "${widget.title.substring(0, 9)}",
-                //             style:
-                //                 TextStyle(color: Colors.green, fontSize: 26)),
-                //         TextSpan(
-                //             text: "${widget.title.substring(9, 13)}",
-                //             style: TextStyle(color: Colors.white, fontSize: 26))
-                //       ]),
-                //     )),
                 backgroundColor: HexColor("#252D40"),
               ),
-        body: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: Wrap(
-                alignment: WrapAlignment.spaceEvenly,
-                children: List.generate(jobDetailList.length, (index) {
-                  return InkWell(
-                    child: jobCard(index),
-                    onTap: () {
-                      id = jobDetailList[index]['id'];
-                      // jobDescription = jobDetailList[index];
-                      updateID(index);
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => LoadingIndicator()),
-                      // );
-                      // CircularProgressIndicator();
-                      // GetJobs().getJobByID();
-                      // if(idUpdated == false)
-                      //   return CircularProgressIndicator();
-                      // else
-                      // return CircularProgressIndicator();
-                      Navigator.pushNamed(context, '/jobDetail');
-                      // setState(() {
-                      //   idUpdated = true;
-                      // });
-                    },
-                    hoverColor: Colors.green[50],
-                  );
-                }),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-              child: Container(
-                height: 50,
-                color: HexColor("#252D40"),
-                child: Center(
-                  child: Text(
-                    "© 2020 FullStackWork",
-                    style: TextStyle(color: Colors.white),
-                  ),
+        body: DraggableScrollbar.rrect(
+          controller: _controller,
+          heightScrollThumb: 35.0,
+          scrollbarTimeToFade: const Duration(milliseconds: 4000),
+          backgroundColor: HexColor("#252D40"),
+          child: ListView(
+            controller: _controller,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Wrap(
+                  alignment: WrapAlignment.spaceEvenly,
+                  children: List.generate(jobDetailList.length, (index) {
+                    return InkWell(
+                      child: jobCard(index),
+                      onTap: () {
+                        id = jobDetailList[index]['id'];
+                        updateID(index);
+                        Navigator.pushNamed(context, '/jobDetail');
+                      },
+                      hoverColor: Colors.green[50],
+                    );
+                  }),
                 ),
               ),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                child: Container(
+                  height: 50,
+                  color: HexColor("#252D40"),
+                  child: Center(
+                    child: Text(
+                      "© 2020 FullStackWork",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
         // )
 
