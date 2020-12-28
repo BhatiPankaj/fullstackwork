@@ -1,33 +1,11 @@
-// import 'package:flutter/material.dart';
-//
-// class AdminPanel extends StatefulWidget {
-//   @override
-//   _AdminPanelState createState() => _AdminPanelState();
-// }
-//
-// class _AdminPanelState extends State<AdminPanel> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         centerTitle: true,
-//         title: Text("Admin Panel"),
-//       ),
-//       body: Container(),
-//     );
-//   }
-// }
-
-// Copyright 2019 The Flutter team. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
+// import 'dart:html';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/gestures.dart' show DragStartBehavior;
+import 'package:fullstackwork/get_cloud_data/addJob.dart';
 
 // import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 
@@ -67,83 +45,42 @@ class AddJobForm extends StatefulWidget {
   AddJobFormState createState() => AddJobFormState();
 }
 
-class PersonData {
-  String name = '';
-  String phoneNumber = '';
-  String email = '';
-  String password = '';
-}
-
-// class PasswordField extends StatefulWidget {
-//   const PasswordField({
-//     this.fieldKey,
-//     this.hintText,
-//     this.labelText,
-//     this.helperText,
-//     this.onSaved,
-//     this.validator,
-//     this.onFieldSubmitted,
-//   });
-//
-//   final Key fieldKey;
-//   final String hintText;
-//   final String labelText;
-//   final String helperText;
-//   final FormFieldSetter<String> onSaved;
-//   final FormFieldValidator<String> validator;
-//   final ValueChanged<String> onFieldSubmitted;
-//
-//   @override
-//   _PasswordFieldState createState() => _PasswordFieldState();
-// }
-
-// class _PasswordFieldState extends State<PasswordField> {
-//   bool _obscureText = true;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextFormField(
-//       key: widget.fieldKey,
-//       obscureText: _obscureText,
-//       maxLength: 8,
-//       onSaved: widget.onSaved,
-//       validator: widget.validator,
-//       onFieldSubmitted: widget.onFieldSubmitted,
-//       decoration: InputDecoration(
-//         filled: true,
-//         hintText: widget.hintText,
-//         labelText: widget.labelText,
-//         helperText: widget.helperText,
-//         suffixIcon: GestureDetector(
-//           dragStartBehavior: DragStartBehavior.down,
-//           onTap: () {
-//             setState(() {
-//               _obscureText = !_obscureText;
-//             });
-//           },
-//           child: Icon(
-//             _obscureText ? Icons.visibility : Icons.visibility_off,
-//             semanticLabel: _obscureText
-//                 ? "Yes"
-//                 : "no",
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 Map jobs = {};
 List<String> _descriptionList = [];
 List<String> _requirementsList = [];
 String _description = "";
 String _requirements = "";
+GlobalKey<FormFieldState> _applyKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _batchKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _companyKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _dateKey = GlobalKey<FormFieldState>();
+// GlobalKey<FormFieldState> _descriptionKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _educationKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _experienceKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _heightKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _imgURLKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _labelKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _locationKey = GlobalKey<FormFieldState>();
+// GlobalKey<FormFieldState> _requirementsKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _salaryKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _skillsKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _sortKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _titleKey = GlobalKey<FormFieldState>();
+GlobalKey<FormFieldState> _widthKey = GlobalKey<FormFieldState>();
+
+
+
+// String _validate(String value) {
+//   if (value.isEmpty) {
+//     return "Should not be empty";
+//   }
+//   return null;
+// }
 
 class AddJobFormState extends State<AddJobForm> {
-  PersonData person = PersonData();
-
   List _descriptionWidgetList = [
     TextFormField(
+      // key: _descriptionKey,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
@@ -152,6 +89,13 @@ class AddJobFormState extends State<AddJobForm> {
       maxLines: 2,
       onFieldSubmitted: (value) {
         _descriptionList.add(value);
+        // _descriptionKey.currentState.validate();
+      },
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) {
+        if (value.isEmpty) return "should not be empty";
+        if (_description == "") return "not saved";
+        return null;
       },
     ),
     SizedBox(
@@ -161,14 +105,22 @@ class AddJobFormState extends State<AddJobForm> {
 
   List _requirementsWidgetList = [
     TextFormField(
+      // key: _requirementsKey,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         border: const OutlineInputBorder(),
         labelText: "requirements",
       ),
       maxLines: 2,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       onFieldSubmitted: (value) {
         _requirementsList.add(value);
+        // _requirementsKey.currentState.validate();
+      },
+      validator: (value) {
+        if (value.isEmpty) return "should not be empty";
+        if (_requirements == "") return "not saved";
+        return null;
       },
     ),
     SizedBox(
@@ -187,57 +139,63 @@ class AddJobFormState extends State<AddJobForm> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  // final GlobalKey<FormFieldState<String>> _passwordFieldKey =
-  //     GlobalKey<FormFieldState<String>>();
-  // final _UsNumberTextInputFormatter _phoneNumberFormatter =
-  //     _UsNumberTextInputFormatter();
+  void showDialogForJobUpdate(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Job Data"),
+            content: Container(
+              height: 500,
+              width: 500,
+              child: ListView(
+                children: [
+                  Text(
+                      "{\n  apply : ${jobs['apply']}\n\n  batch : ${jobs['batch']}\n\n  company : ${jobs['company']}\n\n  date : ${jobs['date']}\n\n  description : ${jobs['description']}\n\n  education : ${jobs['education']}\n\n  experience : ${jobs['experience']}\n\n  height : ${jobs['height']}\n\n  imgURL : ${jobs['imgURL']}\n\n  label : ${jobs['label']}\n\n  location : ${jobs['location']}\n\n  requirements : ${jobs['requirements']}\n\n  salary : ${jobs['salary']}\n\n  skills : ${jobs['skills']}\n\n  sort : ${jobs['sort']}\n\n  title : ${jobs['title']}\n\n  width : ${jobs['width']}\n}")
+                ],
+              ),
+            ),
+            actions: [
+              RaisedButton(
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                color: Colors.green,
+              ),
+              RaisedButton(
+                child: Text("Update"),
+                color: Colors.green,
+                onPressed: () {
+                  // print(jobs);
+                  // print(jobs['height'].runtimeType);
+                  AddJob(jobs['apply'], jobs['batch'], jobs['company'], jobs['date'], jobs['description'], jobs['education'], jobs['experience'], jobs['height'], jobs['imgURL'], jobs['label'], jobs['location'], jobs['requirements'], jobs['salary'], jobs['skills'], jobs['sort'], jobs['title'], jobs['width']).printt();
+                  _formKey.currentState.reset();
+                  Navigator.of(context).pop();
+                  jobs.clear();
+                  _descriptionList.clear();
+                  _requirementsList.clear();
+                  _description = "";
+                  _requirements = "";
+                },
+              )
+            ],
+          );
+        });
+  }
 
-  // String _validateName(String value) {
-  //   if (value.isEmpty) {
-  //     return GalleryLocalizations.of(context).demoTextFieldNameRequired;
-  //   }
-  //   final nameExp = RegExp(r'^[A-Za-z ]+$');
-  //   if (!nameExp.hasMatch(value)) {
-  //     return GalleryLocalizations.of(context)
-  //         .demoTextFieldOnlyAlphabeticalChars;
-  //   }
-  //   return null;
-  // }
-
-  // String _validatePhoneNumber(String value) {
-  //   final phoneExp = RegExp(r'^\(\d\d\d\) \d\d\d\-\d\d\d\d$');
-  //   if (!phoneExp.hasMatch(value)) {
-  //     return GalleryLocalizations.of(context).demoTextFieldEnterUSPhoneNumber;
-  //   }
-  //   return null;
-  // }
-
-  // String _validatePassword(String value) {
-  //   final passwordField = _passwordFieldKey.currentState;
-  //   if (passwordField.value == null || passwordField.value.isEmpty) {
-  //     return GalleryLocalizations.of(context).demoTextFieldEnterPassword;
-  //   }
-  //   if (passwordField.value != value) {
-  //     return GalleryLocalizations.of(context).demoTextFieldPasswordsDoNotMatch;
-  //   }
-  //   return null;
-  // }
-
-  void _handleSubmitted() {
+  void _handleSubmitted(BuildContext context) {
     final form = _formKey.currentState;
     if (!form.validate()) {
       _autoValidateMode =
           AutovalidateMode.always; // Start validating on every change.
-      // showInSnackBar(
-      //   GalleryLocalizations.of(context).demoTextFieldFormErrors,
-      // );
+      showInSnackBar(
+        "Any field should not be empty",
+      );
     } else {
       // form.save();
-      jobs.addAll({'description': _description, 'requirements' : _requirements});
-      print(jobs);
-
-      // showInSnackBar(GalleryLocalizations.of(context)
-      //     .demoTextFieldNameHasPhoneNumber(person.name, person.phoneNumber));
+      jobs.addAll({'description': _description, 'requirements': _requirements});
+      showDialogForJobUpdate(context);
     }
   }
 
@@ -259,6 +217,7 @@ class AddJobFormState extends State<AddJobForm> {
               children: [
                 sizedBoxSpace,
                 TextFormField(
+                  key: _applyKey,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: "apply link",
@@ -266,9 +225,16 @@ class AddJobFormState extends State<AddJobForm> {
                   maxLines: 1,
                   onFieldSubmitted: (value) {
                     jobs.addAll({'apply': value});
+                    _applyKey.currentState.validate();
                   },
-                  onSaved: (value) {
-                    // jobs[0].addAll({'apply link': value});
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  // onSaved: (value) {
+                  //   print(value);
+                  // },
+                  validator: (value) {
+                    if (value.isEmpty) return "should not be empty";
+                    if (jobs['apply'] != value) return "not saved";
+                    return null;
                   },
                 ),
                 sizedBoxSpace,
@@ -276,6 +242,7 @@ class AddJobFormState extends State<AddJobForm> {
                   children: [
                     Expanded(
                       child: TextFormField(
+                        key: _batchKey,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
@@ -284,9 +251,16 @@ class AddJobFormState extends State<AddJobForm> {
                         maxLines: 1,
                         onFieldSubmitted: (value) {
                           jobs.addAll({'batch': value});
+                          _batchKey.currentState.validate();
                         },
                         onSaved: (value) {
                           // jobs[0].addAll({'batch': value});
+                        },
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value.isEmpty) return "should not be empty";
+                          if (jobs['batch'] != value) return "not saved";
+                          return null;
                         },
                       ),
                     ),
@@ -295,16 +269,24 @@ class AddJobFormState extends State<AddJobForm> {
                     ),
                     Expanded(
                       child: TextFormField(
+                        key: _companyKey,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: "company",
                         ),
                         maxLines: 1,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         onFieldSubmitted: (value) {
                           jobs.addAll({'company': value});
+                          _companyKey.currentState.validate();
                         },
                         onSaved: (value) {},
+                        validator: (value) {
+                          if (value.isEmpty) return "should not be empty";
+                          if (jobs['company'] != value) return "not saved";
+                          return null;
+                        },
                       ),
                     ),
                   ],
@@ -314,16 +296,24 @@ class AddJobFormState extends State<AddJobForm> {
                   children: [
                     Expanded(
                       child: TextFormField(
+                        key: _dateKey,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: "date",
                         ),
                         maxLines: 1,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         onFieldSubmitted: (value) {
                           jobs.addAll({'date': value});
+                          _dateKey.currentState.validate();
                         },
                         onSaved: (value) {},
+                        validator: (value) {
+                          if (value.isEmpty) return "should not be empty";
+                          if (jobs['date'] != value) return "not saved";
+                          return null;
+                        },
                       ),
                     ),
                     SizedBox(
@@ -331,6 +321,7 @@ class AddJobFormState extends State<AddJobForm> {
                     ),
                     Expanded(
                       child: TextFormField(
+                        key: _sortKey,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
                         ],
@@ -340,32 +331,48 @@ class AddJobFormState extends State<AddJobForm> {
                           labelText: "sort",
                         ),
                         maxLines: 1,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         onFieldSubmitted: (value) {
-                          jobs.addAll({'sort': value});
+                          jobs.addAll({'sort': int.parse(value)});
+                          _sortKey.currentState.validate();
                         },
                         onSaved: (value) {},
+                        validator: (value) {
+                          if (value.isEmpty) return "should not be empty";
+                          if (jobs['sort'] != int.parse(value)) return "not saved";
+                          return null;
+                        },
                       ),
                     ),
                   ],
                 ),
                 sizedBoxSpace,
                 TextFormField(
+                  key: _educationKey,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: "education",
                   ),
                   maxLines: 1,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   onFieldSubmitted: (value) {
                     jobs.addAll({'education': value});
+                    _educationKey.currentState.validate();
                   },
                   onSaved: (value) {},
+                  validator: (value) {
+                    if (value.isEmpty) return "should not be empty";
+                    if (jobs['education'] != value) return "not saved";
+                    return null;
+                  },
                 ),
                 sizedBoxSpace,
                 Row(
                   children: [
                     Expanded(
                       child: TextFormField(
+                        key: _heightKey,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
                         ],
@@ -374,10 +381,17 @@ class AddJobFormState extends State<AddJobForm> {
                           labelText: "height",
                         ),
                         maxLines: 1,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         onFieldSubmitted: (value) {
-                          jobs.addAll({'height': value});
+                          jobs.addAll({'height': int.parse(value)});
+                          _heightKey.currentState.validate();
                         },
                         onSaved: (value) {},
+                        validator: (value) {
+                          if (value.isEmpty) return "should not be empty";
+                          if (jobs['height'] != int.parse(value)) return "not saved";
+                          return null;
+                        },
                       ),
                     ),
                     SizedBox(
@@ -385,6 +399,7 @@ class AddJobFormState extends State<AddJobForm> {
                     ),
                     Expanded(
                       child: TextFormField(
+                        key: _widthKey,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
                         ],
@@ -394,42 +409,65 @@ class AddJobFormState extends State<AddJobForm> {
                           labelText: "width",
                         ),
                         maxLines: 1,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         onFieldSubmitted: (value) {
-                          jobs.addAll({'width': value});
+                          jobs.addAll({'width': int.parse(value)});
+                          _widthKey.currentState.validate();
                         },
                         onSaved: (value) {},
+                        validator: (value) {
+                          if (value.isEmpty) return "should not be empty";
+                          if (jobs['width'] != int.parse(value)) return "not saved";
+                          return null;
+                        },
                       ),
                     ),
                   ],
                 ),
                 sizedBoxSpace,
                 TextFormField(
+                  key: _imgURLKey,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: "imgURL",
                   ),
                   maxLines: 1,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   onFieldSubmitted: (value) {
                     jobs.addAll({'imgURL': value});
+                    _imgURLKey.currentState.validate();
                   },
                   onSaved: (value) {},
+                  validator: (value) {
+                    if (value.isEmpty) return "should not be empty";
+                    if (jobs['imgURL'] != value) return "not saved";
+                    return null;
+                  },
                 ),
                 sizedBoxSpace,
                 Row(
                   children: [
                     Expanded(
                       child: TextFormField(
+                        key: _labelKey,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: "label",
                         ),
                         maxLines: 1,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         onFieldSubmitted: (value) {
                           jobs.addAll({'label': value});
+                          _labelKey.currentState.validate();
                         },
                         onSaved: (value) {},
+                        validator: (value) {
+                          if (value.isEmpty) return "should not be empty";
+                          if (jobs['label'] != value) return "not saved";
+                          return null;
+                        },
                       ),
                     ),
                     SizedBox(
@@ -437,48 +475,73 @@ class AddJobFormState extends State<AddJobForm> {
                     ),
                     Expanded(
                       child: TextFormField(
+                        key: _titleKey,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: "title",
                         ),
                         maxLines: 1,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         onFieldSubmitted: (value) {
                           jobs.addAll({'title': value});
+                          _titleKey.currentState.validate();
                         },
                         onSaved: (value) {},
+                        validator: (value) {
+                          if (value.isEmpty) return "should not be empty";
+                          if (jobs['title'] != value) return "not saved";
+                          return null;
+                        },
                       ),
                     ),
                   ],
                 ),
                 sizedBoxSpace,
                 TextFormField(
+                  key: _locationKey,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: "location",
                   ),
                   maxLines: 1,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   onFieldSubmitted: (value) {
                     jobs.addAll({'location': value});
+                    _locationKey.currentState.validate();
                   },
                   onSaved: (value) {},
+                  validator: (value) {
+                    if (value.isEmpty) return "should not be empty";
+                    if (jobs['location'] != value) return "not saved";
+                    return null;
+                  },
                 ),
                 sizedBoxSpace,
                 Row(
                   children: [
                     Expanded(
                       child: TextFormField(
+                        key: _experienceKey,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: "experience",
                         ),
                         maxLines: 1,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         onFieldSubmitted: (value) {
                           jobs.addAll({'experience': value});
+                          _experienceKey.currentState.validate();
                         },
                         onSaved: (value) {},
+                        validator: (value) {
+                          if (value.isEmpty) return "should not be empty";
+                          if (jobs['experience'] != value)
+                            return "not saved";
+                          return null;
+                        },
                       ),
                     ),
                     SizedBox(
@@ -486,32 +549,48 @@ class AddJobFormState extends State<AddJobForm> {
                     ),
                     Expanded(
                       child: TextFormField(
+                        key: _salaryKey,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           labelText: "salary",
                         ),
                         maxLines: 1,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         onFieldSubmitted: (value) {
                           jobs.addAll({'salary': value});
+                          _salaryKey.currentState.validate();
                         },
                         onSaved: (value) {},
+                        validator: (value) {
+                          if (value.isEmpty) return "should not be empty";
+                          if (jobs['salary'] != value) return "not saved";
+                          return null;
+                        },
                       ),
                     ),
                   ],
                 ),
                 sizedBoxSpace,
                 TextFormField(
+                  key: _skillsKey,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     labelText: "skills",
                   ),
                   maxLines: 1,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   onFieldSubmitted: (value) {
                     jobs.addAll({'skills': value});
+                    _skillsKey.currentState.validate();
                   },
                   onSaved: (value) {},
+                  validator: (value) {
+                    if (value.isEmpty) return "should not be empty";
+                    if (jobs['skills'] != value) return "not saved";
+                    return null;
+                  },
                 ),
                 sizedBoxSpace,
                 Column(
@@ -535,6 +614,7 @@ class AddJobFormState extends State<AddJobForm> {
                         onPressed: () {
                           _descriptionWidgetList.addAll([
                             TextFormField(
+                              // key: _descriptionKey,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
@@ -543,8 +623,16 @@ class AddJobFormState extends State<AddJobForm> {
                               maxLines: 2,
                               onFieldSubmitted: (value) {
                                 _descriptionList.add(value);
+                                // _descriptionKey.currentState.validate();
                               },
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               onSaved: (value) {},
+                              validator: (value) {
+                                if (value.isEmpty) return "should not be empty";
+                                if (_description == "") return "not saved";
+                                return null;
+                              },
                             ),
                             SizedBox(
                               height: 6,
@@ -562,10 +650,21 @@ class AddJobFormState extends State<AddJobForm> {
                             size: 17,
                           ),
                           onPressed: () {
+                            // if (_descriptionWidgetList.length / 2 ==
+                            //     _descriptionList.length)
+                            //   _descriptionList.removeLast();
                             _descriptionWidgetList.removeRange(
                                 _descriptionWidgetList.length - 2,
                                 _descriptionWidgetList.length);
-                            _descriptionList.removeLast();
+                            print(
+                                "${_descriptionList.length}  ${_descriptionWidgetList.length}");
+                            int descriptionListLength = _descriptionList.length;
+                            for (int i = 0;
+                                i <
+                                    (descriptionListLength -
+                                        (_descriptionWidgetList.length / 2));
+                                i++) _descriptionList.removeLast();
+                            print(_descriptionList.toString());
                             setState(() {});
                           },
                           shape: CircleBorder()),
@@ -595,6 +694,7 @@ class AddJobFormState extends State<AddJobForm> {
                         onPressed: () {
                           _requirementsWidgetList.addAll([
                             TextFormField(
+                              // key: _applyKey,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 border: const OutlineInputBorder(),
@@ -603,8 +703,16 @@ class AddJobFormState extends State<AddJobForm> {
                               maxLines: 2,
                               onFieldSubmitted: (value) {
                                 _requirementsList.add(value);
+                                // _applyKey.currentState.validate();
                               },
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               onSaved: (value) {},
+                              validator: (value) {
+                                if (value.isEmpty) return "should not be empty";
+                                if (_requirements == "") return "not saved";
+                                return null;
+                              },
                             ),
                             SizedBox(
                               height: 6,
@@ -622,10 +730,22 @@ class AddJobFormState extends State<AddJobForm> {
                             size: 17,
                           ),
                           onPressed: () {
+                            // if (_requirementsWidgetList.length / 2 ==
+                            //     _requirementsList.length)
+                            //   _requirementsList.removeLast();
                             _requirementsWidgetList.removeRange(
                                 _requirementsWidgetList.length - 2,
                                 _requirementsWidgetList.length);
-                            _requirementsList.removeLast();
+                            print(
+                                "${_requirementsList.length}  ${_requirementsWidgetList.length}");
+                            int requirementsListLength =
+                                _requirementsList.length;
+                            for (int i = 0;
+                                i <
+                                    requirementsListLength -
+                                        (_requirementsWidgetList.length / 2);
+                                i++) _requirementsList.removeLast();
+                            print(_requirementsList.toString());
                             setState(() {});
                           },
                           shape: CircleBorder()),
@@ -642,9 +762,21 @@ class AddJobFormState extends State<AddJobForm> {
                       style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
-                      _descriptionList.forEach((element) {_description == "" ?  _description += element : _description += "x-x" + element;});
-                      _requirementsList.forEach((element) {_requirements  == ""? _requirements += element : _requirements += "x-x" + element;});
-                      _handleSubmitted();
+                      // if (_description == "")
+                      _description = "";
+                      _descriptionList.forEach((element) {
+                        _description == ""
+                            ? _description += element
+                            : _description += "x-x" + element;
+                      });
+                      // if (_requirements == "")
+                      _requirements = "";
+                      _requirementsList.forEach((element) {
+                        _requirements == ""
+                            ? _requirements += element
+                            : _requirements += "x-x" + element;
+                      });
+                      _handleSubmitted(context);
                     },
                   ),
                 ),
@@ -657,41 +789,3 @@ class AddJobFormState extends State<AddJobForm> {
     );
   }
 }
-
-/// Format incoming numeric text to fit the format of (###) ###-#### ##
-// class _UsNumberTextInputFormatter extends TextInputFormatter {
-//   @override
-//   TextEditingValue formatEditUpdate(
-//     TextEditingValue oldValue,
-//     TextEditingValue newValue,
-//   ) {
-//     final newTextLength = newValue.text.length;
-//     final newText = StringBuffer();
-//     var selectionIndex = newValue.selection.end;
-//     var usedSubstringIndex = 0;
-//     if (newTextLength >= 1) {
-//       newText.write('(');
-//       if (newValue.selection.end >= 1) selectionIndex++;
-//     }
-//     if (newTextLength >= 4) {
-//       newText.write(newValue.text.substring(0, usedSubstringIndex = 3) + ') ');
-//       if (newValue.selection.end >= 3) selectionIndex += 2;
-//     }
-//     if (newTextLength >= 7) {
-//       newText.write(newValue.text.substring(3, usedSubstringIndex = 6) + '-');
-//       if (newValue.selection.end >= 6) selectionIndex++;
-//     }
-//     if (newTextLength >= 11) {
-//       newText.write(newValue.text.substring(6, usedSubstringIndex = 10) + ' ');
-//       if (newValue.selection.end >= 10) selectionIndex++;
-//     }
-//     // Dump the rest.
-//     if (newTextLength >= usedSubstringIndex) {
-//       newText.write(newValue.text.substring(usedSubstringIndex));
-//     }
-//     return TextEditingValue(
-//       text: newText.toString(),
-//       selection: TextSelection.collapsed(offset: selectionIndex),
-//     );
-//   }
-// }
